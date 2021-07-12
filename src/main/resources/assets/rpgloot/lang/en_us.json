@@ -3,6 +3,10 @@
   "modifier.name.rpgloot.frost": "Freezing",
   "attribute.name.rpgloot.lifesteal": "% Lifesteal",
   "modifier.name.rpgloot.lifesteal": "Sapping",
-  "attribute.name.rpgloot.learning": "% more XP",
-  "modifier.name.rpgloot.learning": "of Learning"
+  "attribute.name.rpgloot.learning": "% more XP on Kill",
+  "modifier.name.rpgloot.learning": "of Learning",
+  "attribute.name.rpgloot.speed": "% Faster",
+  "modifier.name.rpgloot.speed": "of Speed",
+  "attribute.name.rpgloot.mending": "% Chance of Mending",
+  "modifier.name.rpgloot.mending": "Mending"
 }

@@ -3,9 +3,9 @@ package com.rpgloot.Modifier.Weapon;
 import com.rpgloot.Modifier.IModifier;
 import com.rpgloot.Registry.AttributeRegistry;
 import com.rpgloot.Registry.ModifierRegistry;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,7 +13,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.util.Arrays;
@@ -67,15 +67,19 @@ public class FrostModifier implements IModifier {
 
 	@Override
 	public void handleEventRegistry() {
-		MinecraftForge.EVENT_BUS.addListener(FrostModifier::onAttack);
+		MinecraftForge.EVENT_BUS.addListener(FrostModifier::onDamageLiving);
 	}
 
-	private static void onAttack(AttackEntityEvent e) {
+	private static void onDamageLiving(LivingDamageEvent e) {
 		IModifier mod = ModifierRegistry.MODIFIERS.FROST.get();
-		ItemStack weapon = e.getPlayer().getMainHandItem();
-		if (mod.itemHasModifier(weapon)) {
-			if (e.getTarget() instanceof LivingEntity) {
-				((LivingEntity) e.getTarget()).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, Math.round((int) mod.getValue(weapon) * 20f), 2));
+		if (e.getSource().getEntity() == null) {
+			return;
+		}
+		if (e.getSource().getEntity() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) e.getSource().getEntity();
+			ItemStack weapon = player.getMainHandItem();
+			if (mod.itemHasModifier(weapon)) {
+				e.getEntityLiving().addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, Math.round((int) mod.getValue(weapon) * 20f), 2));
 			}
 		}
 	}

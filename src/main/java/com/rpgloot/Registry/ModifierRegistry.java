@@ -1,12 +1,8 @@
 package com.rpgloot.Registry;
 
 import com.rpgloot.Modifier.IModifier;
-import com.rpgloot.Modifier.Weapon.FrostModifier;
-import com.rpgloot.Modifier.Weapon.LearningModifier;
-import com.rpgloot.Modifier.Weapon.LifestealModifier;
-import com.rpgloot.RPGLoot;
+import com.rpgloot.Modifier.Weapon.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -20,7 +16,9 @@ public class ModifierRegistry {
 	public enum MODIFIERS {
 		FROST(5, new FrostModifier()),
 		LEARNING(5, new LearningModifier()),
-		LIFESTEAL(5, new LifestealModifier());
+		SPEED(5, new SpeedModifier()),
+		LIFESTEAL(5, new LifestealModifier()),
+		MENDING(5, new MendingModifier());
 
 		private final IModifier modifier;
 		private final int weight;

@@ -89,7 +89,7 @@ public interface IModifier {
 	/**
 	 * Slot(s) that this modifier is active in.
 	 */
-	default EquipmentSlotType[] getValidSlotTypes() {
+	default EquipmentSlotType[] getValidSlotTypes(ItemStack item) {
 		return new EquipmentSlotType[] { EquipmentSlotType.MAINHAND };
 	}
 
@@ -111,7 +111,7 @@ public interface IModifier {
 	 * Handles what items the modifier's Attribute should be applied to.
 	 */
 	default void handleItemAttribute(ItemAttributeModifierEvent e) {
-		for (EquipmentSlotType slot : getValidSlotTypes()) {
+		for (EquipmentSlotType slot : getValidSlotTypes(e.getItemStack())) {
 			if (e.getSlotType() == slot) {
 				if (!e.getModifiers().containsKey(getAttribute())) {
 					if (canApply(e.getItemStack())) {
