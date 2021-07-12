@@ -15,18 +15,20 @@ public class RandomizerTagUpdater {
 	}
 
 	private static void onItemCrafted(PlayerEvent.ItemCraftedEvent e) {
+		//Works but actual item values are shown only after the item has been moved/dropped
 		handleRandomizeTag(e.getCrafting());
 	}
 
 	private static void onItemPickup(PlayerEvent.ItemPickupEvent e) {
-		handleRandomizeTag(e.getStack());
+		//Does not work
+		e.getOriginalEntity().setItem(handleRandomizeTag(e.getStack()));
 	}
 
-	public static void handleRandomizeTag(ItemStack stack) {
+	public static ItemStack handleRandomizeTag(ItemStack stack) {
 		if (stack.hasTag()) {
 			CompoundNBT itemtag = stack.getTag();
 			if (itemtag.getBoolean("rpgloot.randomize") || Configuration.MODIFY_ALL.get()) {
-				IModifier.ModifierRarity rarity = IModifier.ModifierRarity.Common;
+				IModifier.ModifierRarity rarity;
 				if (itemtag.contains("rpgloot.rarity")) {
 					switch (itemtag.getString("rpgloot.rarity")) {
 						case "common":
@@ -63,5 +65,6 @@ public class RandomizerTagUpdater {
 				stack.setTag(itemtag);
 			}
 		}
+		return stack;
 	}
 }
