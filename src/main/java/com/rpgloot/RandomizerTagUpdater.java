@@ -2,10 +2,12 @@ package com.rpgloot;
 
 import com.rpgloot.Modifier.IModifier;
 import com.rpgloot.Registry.ModifierRegistry;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class RandomizerTagUpdater {
@@ -13,6 +15,15 @@ public class RandomizerTagUpdater {
 	public static void init() {
 		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemCrafted);
 		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemToss);
+		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onLivingDrops);
+	}
+
+	private static void onLivingDrops(LivingDropsEvent e) {
+		if (!e.getEntity().level.isClientSide()) {
+			for (ItemEntity itementity : e.getDrops()) {
+				handleRandomizeTag(itementity.getItem());
+			}
+		}
 	}
 
 	private static void onItemCrafted(PlayerEvent.ItemCraftedEvent e) {
