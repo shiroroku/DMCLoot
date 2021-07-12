@@ -5,29 +5,38 @@ import com.rpgloot.Registry.ModifierRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class RandomizerTagUpdater {
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemCrafted);
-		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemPickup);
+		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemToss);
 	}
 
 	private static void onItemCrafted(PlayerEvent.ItemCraftedEvent e) {
-		//Works but actual item values are shown only after the item has been moved/dropped
-		handleRandomizeTag(e.getCrafting());
+		if (!e.getEntity().level.isClientSide()) {
+			handleRandomizeTag(e.getCrafting());
+		}
 	}
 
-	private static void onItemPickup(PlayerEvent.ItemPickupEvent e) {
-		//Does not work
-		e.getOriginalEntity().setItem(handleRandomizeTag(e.getStack()));
+	private static void onItemToss(ItemTossEvent e) {
+		if (!e.getPlayer().level.isClientSide()) {
+			handleRandomizeTag(e.getEntityItem().getItem());
+		}
 	}
 
-	public static ItemStack handleRandomizeTag(ItemStack stack) {
+	public static void handleRandomizeTag(ItemStack stack) {
 		if (stack.hasTag()) {
 			CompoundNBT itemtag = stack.getTag();
-			if (itemtag.getBoolean("rpgloot.randomize") || Configuration.MODIFY_ALL.get()) {
+			if (Configuration.MODIFY_ALL.get()) {
+				if (!itemtag.contains("rpgloot.randomize")) {
+					itemtag.putBoolean("rpgloot.randomize", true);
+				}
+			}
+
+			if (itemtag.getBoolean("rpgloot.randomize")) {
 				IModifier.ModifierRarity rarity;
 				if (itemtag.contains("rpgloot.rarity")) {
 					switch (itemtag.getString("rpgloot.rarity")) {
@@ -65,6 +74,5 @@ public class RandomizerTagUpdater {
 				stack.setTag(itemtag);
 			}
 		}
-		return stack;
 	}
 }

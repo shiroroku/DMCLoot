@@ -20,6 +20,7 @@ public class RPGLoot {
 	public RPGLoot() {
 		Events.init();
 		AttributeRegistry.init();
+		RandomizerTagUpdater.init();
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.COMMONCONFIG);
 

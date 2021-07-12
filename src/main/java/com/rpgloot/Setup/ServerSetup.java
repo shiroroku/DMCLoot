@@ -9,7 +9,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = RPGLoot.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.DEDICATED_SERVER)
 public class ServerSetup {
 	public static void init(final FMLClientSetupEvent event) {
-		RandomizerTagUpdater.init();
 	}
 
 }
