@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_sword"
+    }
+  ],
+  "result": {
+    "item": "minecraft:iron_sword",
+    "nbt": {
+      "rpgloot.randomize": true,
+      "rpgloot.rarity": "epic"
+    }
+  }
+}

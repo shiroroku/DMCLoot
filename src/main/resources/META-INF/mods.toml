@@ -1,0 +1,25 @@
+license = "All rights reserved"
+loaderVersion = "[36,)"
+modLoader = "javafml"
+[[mods]]
+displayName = "RPGLoot"
+modId = "rpgloot"
+version = "${file.jarVersion}"
+#logoFile="rpgloot.png"
+authors = "Amo, shiroroku"
+credits = ""
+description = '''
+beepboop description beep
+'''
+[[dependencies.rpgloot]]
+mandatory = true
+modId = "forge"
+ordering = "NONE"
+side = "BOTH"
+versionRange = "[36,)"
+[[dependencies.rpgloot]]
+mandatory = true
+modId = "minecraft"
+ordering = "NONE"
+side = "BOTH"
+versionRange = "[1.16.5,1.17)"
