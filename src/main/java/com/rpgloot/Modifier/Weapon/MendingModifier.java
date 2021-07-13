@@ -1,5 +1,6 @@
 package com.rpgloot.Modifier.Weapon;
 
+import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
 import com.rpgloot.Registry.AttributeRegistry;
 import com.rpgloot.Registry.ModifierRegistry;
@@ -29,6 +30,11 @@ public class MendingModifier implements IModifier {
 	@Override
 	public ModifierType getModifierType() {
 		return ModifierType.Prefix;
+	}
+
+	@Override
+	public List<String> getAdditions() {
+		return Configuration.MENDING_ADDITIONS.get();
 	}
 
 	@Override

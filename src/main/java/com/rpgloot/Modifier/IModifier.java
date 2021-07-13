@@ -7,10 +7,13 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -108,6 +111,13 @@ public interface IModifier {
 	}
 
 	/**
+	 * List of registry names this modifier should also apply to.
+	 */
+	default List<String> getAdditions() {
+		return new ArrayList<>();
+	}
+
+	/**
 	 * Handles what items the modifier's Attribute should be applied to.
 	 */
 	default void handleItemAttribute(ItemAttributeModifierEvent e) {
@@ -126,11 +136,25 @@ public interface IModifier {
 	 * Returns if the stack can support this modifier. Use getValidSlotTypes to specify classes.
 	 */
 	default boolean canApply(ItemStack stack) {
+		List<String> additions = getAdditions();
 		List<Class<? extends Item>> itemtypes = getValidItemTypes();
 		boolean add = itemtypes == null || itemtypes.size() == 0;
 		for (Class<? extends Item> type : itemtypes) {
 			if (type.isAssignableFrom(stack.getItem().getClass())) {
 				add = true;
+			}
+		}
+		for (String id : additions) {
+			if (!id.isEmpty()) {
+				String[] idsplit = id.split(":");
+				if (idsplit.length == 2) {
+					Item fromreg = ForgeRegistries.ITEMS.getValue(new ResourceLocation(idsplit[0], idsplit[1]));
+					if (fromreg != null) {
+						if (fromreg.getItem() == stack.getItem()) {
+							add = true;
+						}
+					}
+				}
 			}
 		}
 		return add;

@@ -9,7 +9,7 @@
     "item": "minecraft:iron_sword",
     "nbt": {
       "rpgloot.randomize": true,
-      "rpgloot.rarity": "epic"
+      "rpgloot.rarity_weights": "0,0,0,0,1,0"
     }
   }
 }

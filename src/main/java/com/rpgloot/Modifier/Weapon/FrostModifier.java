@@ -1,5 +1,6 @@
 package com.rpgloot.Modifier.Weapon;
 
+import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
 import com.rpgloot.Registry.AttributeRegistry;
 import com.rpgloot.Registry.ModifierRegistry;
@@ -32,6 +33,11 @@ public class FrostModifier implements IModifier {
 	@Override
 	public List<Class<? extends Item>> getValidItemTypes() {
 		return Arrays.asList(SwordItem.class, AxeItem.class);
+	}
+
+	@Override
+	public List<String> getAdditions() {
+		return Configuration.FROST_ADDITIONS.get();
 	}
 
 	@Override

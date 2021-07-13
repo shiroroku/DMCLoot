@@ -1,5 +1,6 @@
 package com.rpgloot.Modifier.Weapon;
 
+import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
 import com.rpgloot.Registry.AttributeRegistry;
 import com.rpgloot.Registry.ModifierRegistry;
@@ -31,6 +32,11 @@ public class LearningModifier implements IModifier {
 	@Override
 	public ModifierType getModifierType() {
 		return ModifierType.Suffix;
+	}
+
+	@Override
+	public List<String> getAdditions() {
+		return Configuration.LEARNING_ADDITIONS.get();
 	}
 
 	@Override

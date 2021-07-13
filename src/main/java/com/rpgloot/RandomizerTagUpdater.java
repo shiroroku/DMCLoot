@@ -60,7 +60,7 @@ public class RandomizerTagUpdater {
 			}
 
 			if (itemtag.getBoolean("rpgloot.randomize")) {
-				IModifier.ModifierRarity rarity;
+				IModifier.ModifierRarity rarity = null;
 				if (itemtag.contains("rpgloot.rarity")) {
 					switch (itemtag.getString("rpgloot.rarity")) {
 						case "common":
@@ -88,6 +88,21 @@ public class RandomizerTagUpdater {
 					}
 					itemtag.remove("rpgloot.rarity");
 				} else {
+					if (itemtag.contains("rpgloot.rarity_weights")) {
+						String[] split = itemtag.getString("rpgloot.rarity_weights").split(",");
+						int[] weights = new int[split.length];
+						for (int i = 0; i < split.length; i++) {
+							try {
+								weights[i] = Integer.parseInt(split[i]);
+							} catch (NumberFormatException nfe) {
+								weights[i] = 0;
+							}
+						}
+						rarity = ModifierRegistry.getRandomWeightedRarity(ModifierRegistry.randomInstance, weights);
+						itemtag.remove("rpgloot.rarity_weights");
+					}
+				}
+				if (rarity == null) {
 					rarity = ModifierRegistry.getRandomRarity(ModifierRegistry.randomInstance);
 				}
 				ModifierRegistry.applyRandomModifiersTo(ModifierRegistry.randomInstance, stack, rarity);

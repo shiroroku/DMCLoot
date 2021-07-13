@@ -2,6 +2,7 @@ package com.rpgloot.Registry;
 
 import com.rpgloot.Modifier.IModifier;
 import com.rpgloot.Modifier.Weapon.*;
+import com.rpgloot.RPGLoot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.Style;
@@ -96,6 +97,33 @@ public class ModifierRegistry {
 					}
 				}
 			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets a random weighted rarity of the type from the registry
+	 */
+	public static IModifier.ModifierRarity getRandomWeightedRarity(Random rand, int[] weights) {
+		if (weights.length != IModifier.ModifierRarity.values().length) {
+			RPGLoot.LOGGER.error("(rpgloot.randomize): (rpgloot.rarity_weights): Rarity values and given weights do not correlate!");
+			return null;
+		}
+
+		int total = 0;
+		int index = 0;
+		for (IModifier.ModifierRarity rartiy : IModifier.ModifierRarity.values()) {
+			total += weights[index];
+			index++;
+		}
+		int random = randomInstance.nextInt(total) + 1;
+		index = 0;
+		for (IModifier.ModifierRarity rarity : IModifier.ModifierRarity.values()) {
+			random -= weights[index];
+			if (random <= 0) {
+				return rarity;
+			}
+			index++;
 		}
 		return null;
 	}
