@@ -5,7 +5,7 @@ import com.rpgloot.Modifier.Weapon.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.TextComponent;
 
 import java.util.Random;
 
@@ -39,7 +39,7 @@ public class ModifierRegistry {
 	}
 
 	public static void applyRandomModifiersTo(Random rand, ItemStack item, IModifier.ModifierRarity rarity) {
-		TranslationTextComponent original = (TranslationTextComponent) item.getHoverName();
+		TextComponent original = (TextComponent) item.getHoverName();
 
 		IModifier prefix = getRandomModifierFor(IModifier.ModifierType.Prefix, item);
 		IModifier suffix = getRandomModifierFor(IModifier.ModifierType.Suffix, item);

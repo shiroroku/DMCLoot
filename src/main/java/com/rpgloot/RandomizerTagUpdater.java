@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class RandomizerTagUpdater {
@@ -16,6 +17,17 @@ public class RandomizerTagUpdater {
 		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemCrafted);
 		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemToss);
 		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onLivingDrops);
+		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onContainerOpen);
+
+	}
+
+	private static void onContainerOpen(PlayerContainerEvent.Open e) {
+		if (!e.getEntity().level.isClientSide()) {
+			for (ItemStack stack : e.getContainer().getItems()) {
+				handleRandomizeTag(stack);
+			}
+		}
+
 	}
 
 	private static void onLivingDrops(LivingDropsEvent e) {
