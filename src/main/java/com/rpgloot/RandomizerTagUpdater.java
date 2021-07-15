@@ -60,29 +60,29 @@ public class RandomizerTagUpdater {
 			}
 
 			if (itemtag.getBoolean("rpgloot.randomize")) {
-				IModifier.ModifierRarity rarity = null;
+				IModifier.Rarity rarity = null;
 				if (itemtag.contains("rpgloot.rarity")) {
 					switch (itemtag.getString("rpgloot.rarity")) {
 						case "common":
-							rarity = IModifier.ModifierRarity.Common;
+							rarity = IModifier.Rarity.Common;
 							break;
 						case "uncommon":
-							rarity = IModifier.ModifierRarity.Uncommon;
+							rarity = IModifier.Rarity.Uncommon;
 							break;
 						case "rare":
-							rarity = IModifier.ModifierRarity.Rare;
+							rarity = IModifier.Rarity.Rare;
 							break;
 						case "epic":
-							rarity = IModifier.ModifierRarity.Epic;
+							rarity = IModifier.Rarity.Epic;
 							break;
 						case "ledgendary":
-							rarity = IModifier.ModifierRarity.Ledgendary;
+							rarity = IModifier.Rarity.Ledgendary;
 							break;
 						case "mythic":
-							rarity = IModifier.ModifierRarity.Mythic;
+							rarity = IModifier.Rarity.Mythic;
 							break;
 						default:
-							rarity = IModifier.ModifierRarity.Common;
+							rarity = IModifier.Rarity.Common;
 							RPGLoot.LOGGER.error("(rpgloot.randomize): (rpgloot.rarity): Rarity specified in itemstack NBT does not exist!");
 							break;
 					}
@@ -105,7 +105,7 @@ public class RandomizerTagUpdater {
 				if (rarity == null) {
 					rarity = ModifierRegistry.getRandomRarity(ModifierRegistry.randomInstance);
 				}
-				ModifierRegistry.applyRandomModifiersTo(ModifierRegistry.randomInstance, stack, rarity);
+				ModifierRegistry.applyRandomModifiersTo(stack, rarity);
 
 				itemtag.putBoolean("rpgloot.randomize", false);
 

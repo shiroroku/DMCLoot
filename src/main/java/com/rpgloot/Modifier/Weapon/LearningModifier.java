@@ -30,8 +30,8 @@ public class LearningModifier implements IModifier {
 	private static final Method getMobExperience = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_70693_a", PlayerEntity.class);
 
 	@Override
-	public ModifierType getModifierType() {
-		return ModifierType.Suffix;
+	public Affix getModifierAffix() {
+		return Affix.Suffix;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class LearningModifier implements IModifier {
 	}
 
 	@Override
-	public List<Class<? extends Item>> getValidItemTypes() {
+	public List<Class<? extends Item>> getValidItemClasses() {
 		return Arrays.asList(SwordItem.class, AxeItem.class);
 	}
 

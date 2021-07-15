@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -19,12 +20,14 @@ import java.util.UUID;
 
 public interface IModifier {
 
-	enum ModifierType {
+	ForgeConfigSpec.IntValue WEIGHT = null;
+
+	enum Affix {
 		Prefix,
 		Suffix
 	}
 
-	enum ModifierRarity {
+	enum Rarity {
 		Common(TextFormatting.WHITE),
 		Uncommon(TextFormatting.GREEN),
 		Rare(TextFormatting.BLUE),
@@ -34,7 +37,7 @@ public interface IModifier {
 
 		private final TextFormatting color;
 
-		ModifierRarity(TextFormatting color) {
+		Rarity(TextFormatting color) {
 			this.color = color;
 		}
 
@@ -46,7 +49,7 @@ public interface IModifier {
 	/**
 	 * Returns whether the modifier is a prefix or a suffix.
 	 */
-	ModifierType getModifierType();
+	Affix getModifierAffix();
 
 	/**
 	 * Returns the suffix/prefix translation component of this modifier.
@@ -59,7 +62,7 @@ public interface IModifier {
 	 * Returns the multiplier for each rarity. Default is 1 - 100 for percentages.
 	 * Can be used as values for each rarity if getDefaultValue is 1.
 	 */
-	default float getMultiplierFromRarity(ModifierRarity rarity) {
+	default float getMultiplierFromRarity(Rarity rarity) {
 		float randomDifference = ModifierRegistry.randomInstance.nextInt(6) - 5;
 		switch (rarity) {
 			default:
@@ -99,7 +102,7 @@ public interface IModifier {
 	/**
 	 * Gets avaliable item classes that this modifier can be applied to. Return null for all items.
 	 */
-	default List<Class<? extends Item>> getValidItemTypes() {
+	default List<Class<? extends Item>> getValidItemClasses() {
 		return null;
 	}
 
@@ -137,7 +140,7 @@ public interface IModifier {
 	 */
 	default boolean canApply(ItemStack stack) {
 		List<String> additions = getAdditions();
-		List<Class<? extends Item>> itemtypes = getValidItemTypes();
+		List<Class<? extends Item>> itemtypes = getValidItemClasses();
 		boolean add = itemtypes == null || itemtypes.size() == 0;
 		for (Class<? extends Item> type : itemtypes) {
 			if (type.isAssignableFrom(stack.getItem().getClass())) {
@@ -172,7 +175,7 @@ public interface IModifier {
 	/**
 	 * Applies this modifier and changes value depending on rarity.
 	 */
-	default void applyWithRarity(ItemStack stack, ModifierRarity rarity) {
+	default void applyWithRarity(ItemStack stack, Rarity rarity) {
 		apply(stack, (int) ((Integer) getDefaultValue() * getMultiplierFromRarity(rarity)));
 	}
 

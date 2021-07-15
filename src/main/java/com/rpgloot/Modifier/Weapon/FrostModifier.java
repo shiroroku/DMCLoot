@@ -26,12 +26,12 @@ public class FrostModifier implements IModifier {
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048.0D));
 
 	@Override
-	public ModifierType getModifierType() {
-		return ModifierType.Prefix;
+	public Affix getModifierAffix() {
+		return Affix.Prefix;
 	}
 
 	@Override
-	public List<Class<? extends Item>> getValidItemTypes() {
+	public List<Class<? extends Item>> getValidItemClasses() {
 		return Arrays.asList(SwordItem.class, AxeItem.class);
 	}
 
@@ -41,7 +41,7 @@ public class FrostModifier implements IModifier {
 	}
 
 	@Override
-	public float getMultiplierFromRarity(ModifierRarity rarity) {
+	public float getMultiplierFromRarity(Rarity rarity) {
 		float randomDifference = ModifierRegistry.randomInstance.nextInt(1) - 2;
 		switch (rarity) {
 			default:

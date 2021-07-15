@@ -20,8 +20,8 @@ public class SpeedModifier implements IModifier {
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 100.0D));
 
 	@Override
-	public ModifierType getModifierType() {
-		return ModifierType.Suffix;
+	public Affix getModifierAffix() {
+		return Affix.Suffix;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class SpeedModifier implements IModifier {
 	}
 
 	@Override
-	public List<Class<? extends Item>> getValidItemTypes() {
+	public List<Class<? extends Item>> getValidItemClasses() {
 		return Arrays.asList(PickaxeItem.class, ShovelItem.class, AxeItem.class);
 	}
 
