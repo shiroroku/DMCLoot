@@ -1,4 +1,4 @@
-package com.rpgloot.Modifier.Weapon;
+package com.rpgloot.Modifier.Suffix;
 
 import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SpeedModifier implements IModifier {
@@ -40,8 +41,8 @@ public class SpeedModifier implements IModifier {
 	}
 
 	@Override
-	public Attribute getAttribute() {
-		return ATTRIBUTE.get();
+	public List<Attribute> getAttribute() {
+		return Collections.singletonList(ATTRIBUTE.get());
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class SpeedModifier implements IModifier {
 		IModifier modifier = ModifierRegistry.MODIFIERS.SPEED.get();
 		ItemStack item = e.getEntityLiving().getMainHandItem();
 		if (modifier.itemHasModifier(item)) {
-			e.setNewSpeed(e.getOriginalSpeed() + ((Integer) modifier.getValue(item) / 100f) * e.getOriginalSpeed());
+			e.setNewSpeed(e.getOriginalSpeed() + (modifier.getValue(item) / 100f) * e.getOriginalSpeed());
 		}
 
 	}

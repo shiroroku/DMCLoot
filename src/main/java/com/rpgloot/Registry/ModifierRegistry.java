@@ -2,9 +2,15 @@ package com.rpgloot.Registry;
 
 import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
-import com.rpgloot.Modifier.Weapon.*;
+import com.rpgloot.Modifier.Prefix.FireModifier;
+import com.rpgloot.Modifier.Prefix.FrostModifier;
+import com.rpgloot.Modifier.Prefix.LifestealModifier;
+import com.rpgloot.Modifier.Prefix.MendingModifier;
+import com.rpgloot.Modifier.Suffix.LearningModifier;
+import com.rpgloot.Modifier.Suffix.SpeedModifier;
 import com.rpgloot.RPGLoot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponent;
@@ -17,6 +23,7 @@ public class ModifierRegistry {
 
 	public enum MODIFIERS {
 		FROST(Configuration.FROST_WEIGHT.get(), new FrostModifier()),
+		FIRE(Configuration.FIRE_WEIGHT.get(), new FireModifier()),
 		LEARNING(Configuration.LEARNING_WEIGHT.get(), new LearningModifier()),
 		SPEED(Configuration.SPEED_WEIGHT.get(), new SpeedModifier()),
 		LIFESTEAL(Configuration.LIFESTEAL_WEIGHT.get(), new LifestealModifier()),
@@ -69,6 +76,9 @@ public class ModifierRegistry {
 		}
 
 		if (newname != null) {
+			CompoundNBT tag = item.getOrCreateTag();
+			tag.putString("rpgloot.rarity", rarity.toString());
+			item.setTag(tag);
 			item.setHoverName(newname.withStyle(Style.EMPTY.withColor(rarity.getColor()).withItalic(false)));
 		}
 	}
@@ -113,11 +123,11 @@ public class ModifierRegistry {
 
 		int total = 0;
 		int index = 0;
-		for (IModifier.Rarity rartiy : IModifier.Rarity.values()) {
+		for (IModifier.Rarity ignored : IModifier.Rarity.values()) {
 			total += weights[index];
 			index++;
 		}
-		int random = randomInstance.nextInt(total) + 1;
+		int random = rand.nextInt(total) + 1;
 		index = 0;
 		for (IModifier.Rarity rarity : IModifier.Rarity.values()) {
 			random -= weights[index];

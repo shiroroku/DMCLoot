@@ -1,36 +1,43 @@
-package com.rpgloot.Modifier.Weapon;
+package com.rpgloot.Modifier.Suffix;
 
 import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
 import com.rpgloot.Registry.AttributeRegistry;
 import com.rpgloot.Registry.ModifierRegistry;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
+import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class LifestealModifier implements IModifier {
+public class LearningModifier implements IModifier {
 
-	private static final String modifierName = "rpgloot.lifesteal";
+	private static final String modifierName = "rpgloot.learning";
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 100.0D));
+	private static final Method getMobExperience = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_70693_a", PlayerEntity.class);
 
 	@Override
 	public Affix getModifierAffix() {
-		return Affix.Prefix;
+		return Affix.Suffix;
 	}
 
 	@Override
 	public List<String> getAdditions() {
-		return Configuration.LIFESTEAL_ADDITIONS.get();
+		return Configuration.LEARNING_ADDITIONS.get();
 	}
 
 	@Override
@@ -44,17 +51,17 @@ public class LifestealModifier implements IModifier {
 	}
 
 	@Override
-	public Attribute getAttribute() {
-		return ATTRIBUTE.get();
+	public List<Attribute> getAttribute() {
+		return Collections.singletonList(ATTRIBUTE.get());
 	}
 
 	@Override
 	public void handleEventRegistry() {
-		MinecraftForge.EVENT_BUS.addListener(LifestealModifier::onDamageLiving);
+		MinecraftForge.EVENT_BUS.addListener(LearningModifier::onLivingDeath);
 	}
 
-	private static void onDamageLiving(LivingDamageEvent e) {
-		IModifier modifier = ModifierRegistry.MODIFIERS.LIFESTEAL.get();
+	private static void onLivingDeath(LivingDeathEvent e) {
+		IModifier modifier = ModifierRegistry.MODIFIERS.LEARNING.get();
 		if (e.getSource().getEntity() == null) {
 			return;
 		}
@@ -62,7 +69,13 @@ public class LifestealModifier implements IModifier {
 			PlayerEntity player = (PlayerEntity) e.getSource().getEntity();
 			ItemStack weapon = player.getMainHandItem();
 			if (modifier.itemHasModifier(weapon)) {
-				player.heal(((Integer) modifier.getValue(weapon) / 100f) * e.getAmount());
+				int xp = 0;
+				try {
+					xp = (int) getMobExperience.invoke(e.getEntityLiving(), player);
+				} catch (IllegalAccessException | InvocationTargetException exception) {
+					exception.printStackTrace();
+				}
+				e.getEntity().level.addFreshEntity(new ExperienceOrbEntity(e.getEntity().level, e.getEntity().getZ(), e.getEntity().getY(), e.getEntity().getZ(), (int) (xp * modifier.getValue(weapon) / 100f)));
 			}
 		}
 	}

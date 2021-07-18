@@ -1,6 +1,10 @@
 {
   "attribute.name.rpgloot.frost": "seconds of Frost",
+  "attribute.name.rpgloot.frost.damage": "Frost Damage",
   "modifier.name.rpgloot.frost": "Freezing",
+  "attribute.name.rpgloot.fire": "seconds of Fire",
+  "attribute.name.rpgloot.fire.damage": "Fire Damage",
+  "modifier.name.rpgloot.fire": "Flaming",
   "attribute.name.rpgloot.lifesteal": "% Lifesteal",
   "modifier.name.rpgloot.lifesteal": "Sapping",
   "attribute.name.rpgloot.learning": "% more XP on Kill",
@@ -8,5 +12,11 @@
   "attribute.name.rpgloot.speed": "% Faster",
   "modifier.name.rpgloot.speed": "of Speed",
   "attribute.name.rpgloot.mending": "% Chance of Mending",
-  "modifier.name.rpgloot.mending": "Mending"
+  "modifier.name.rpgloot.mending": "Mending",
+  "rarity.rpgloot.common": "Common",
+  "rarity.rpgloot.uncommon": "Uncommon",
+  "rarity.rpgloot.rare": "Rare",
+  "rarity.rpgloot.epic": "Epic",
+  "rarity.rpgloot.legendary": "Legendary",
+  "rarity.rpgloot.mythic": "Mythic"
 }

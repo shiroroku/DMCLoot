@@ -1,4 +1,4 @@
-package com.rpgloot.Modifier.Weapon;
+package com.rpgloot.Modifier.Prefix;
 
 import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
@@ -19,6 +19,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -57,8 +58,8 @@ public class MendingModifier implements IModifier {
 	}
 
 	@Override
-	public Attribute getAttribute() {
-		return ATTRIBUTE.get();
+	public List<Attribute> getAttribute() {
+		return Collections.singletonList(ATTRIBUTE.get());
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class MendingModifier implements IModifier {
 
 	private static void processModifier(IModifier modifier, Random r, ItemStack stack) {
 		if (modifier.itemHasModifier(stack) && stack.isDamageableItem() && stack.getDamageValue() > 0) {
-			if (r.nextDouble() < ((Integer) modifier.getValue(stack) / 100f)) {
+			if (r.nextDouble() < (modifier.getValue(stack) / 100f)) {
 				stack.setDamageValue(stack.getDamageValue() - 2);
 			}
 		}

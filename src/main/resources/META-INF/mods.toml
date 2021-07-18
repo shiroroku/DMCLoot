@@ -6,7 +6,7 @@ displayName = "RPGLoot"
 modId = "rpgloot"
 version = "${file.jarVersion}"
 #logoFile="rpgloot.png"
-authors = "Amo, shiroroku"
+authors = "Amo, shiroroku(elise)"
 credits = ""
 description = '''
 beepboop description beep

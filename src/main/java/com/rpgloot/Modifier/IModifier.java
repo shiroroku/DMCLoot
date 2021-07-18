@@ -28,21 +28,27 @@ public interface IModifier {
 	}
 
 	enum Rarity {
-		Common(TextFormatting.WHITE),
-		Uncommon(TextFormatting.GREEN),
-		Rare(TextFormatting.BLUE),
-		Epic(TextFormatting.DARK_PURPLE),
-		Ledgendary(TextFormatting.GOLD),
-		Mythic(TextFormatting.RED);
+		Common(TextFormatting.WHITE, "common"),
+		Uncommon(TextFormatting.GREEN, "uncommon"),
+		Rare(TextFormatting.BLUE, "rare"),
+		Epic(TextFormatting.DARK_PURPLE, "epic"),
+		Legendary(TextFormatting.GOLD, "legendary"),
+		Mythic(TextFormatting.RED, "mythic");
 
 		private final TextFormatting color;
+		private final String name;
 
-		Rarity(TextFormatting color) {
+		Rarity(TextFormatting color, String name) {
 			this.color = color;
+			this.name = name;
 		}
 
 		public TextFormatting getColor() {
 			return this.color;
+		}
+
+		public String toString() {
+			return this.name;
 		}
 	}
 
@@ -75,7 +81,7 @@ public interface IModifier {
 				return 20f + randomDifference;
 			case Epic:
 				return 40f + randomDifference;
-			case Ledgendary:
+			case Legendary:
 				return 70f + randomDifference;
 			case Mythic:
 				return Math.min(100f, 100f + randomDifference);
@@ -88,9 +94,9 @@ public interface IModifier {
 	String getModifierName();
 
 	/**
-	 * Points to the registered Attribute for this modifier.
+	 * Points to the registered Attribute(s) for this modifier.
 	 */
-	Attribute getAttribute();
+	List<Attribute> getAttribute();
 
 	/**
 	 * Slot(s) that this modifier is active in.
@@ -109,7 +115,7 @@ public interface IModifier {
 	/**
 	 * The default strength value of this modifier.
 	 */
-	default Object getDefaultValue() {
+	default int getDefaultValue() {
 		return 1;
 	}
 
@@ -126,9 +132,11 @@ public interface IModifier {
 	default void handleItemAttribute(ItemAttributeModifierEvent e) {
 		for (EquipmentSlotType slot : getValidSlotTypes(e.getItemStack())) {
 			if (e.getSlotType() == slot) {
-				if (!e.getModifiers().containsKey(getAttribute())) {
-					if (canApply(e.getItemStack())) {
-						e.addModifier(getAttribute(), new AttributeModifier(UUID.nameUUIDFromBytes((RPGLoot.MODID + "." + getModifierName()).getBytes()), () -> (RPGLoot.MODID + "." + getModifierName()), e.getItemStack().getTag().getInt(getModifierName()), AttributeModifier.Operation.ADDITION));
+				for (Attribute a : getAttribute()) {
+					if (!e.getModifiers().containsKey(a)) {
+						if (canApply(e.getItemStack())) {
+							e.addModifier(a, new AttributeModifier(UUID.nameUUIDFromBytes((RPGLoot.MODID + "." + getModifierName()).getBytes()), () -> (RPGLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a), AttributeModifier.Operation.ADDITION));
+						}
 					}
 				}
 			}
@@ -176,19 +184,28 @@ public interface IModifier {
 	 * Applies this modifier and changes value depending on rarity.
 	 */
 	default void applyWithRarity(ItemStack stack, Rarity rarity) {
-		apply(stack, (int) ((Integer) getDefaultValue() * getMultiplierFromRarity(rarity)));
+		apply(stack, (int) (getDefaultValue() * getMultiplierFromRarity(rarity)));
 	}
 
 	/**
-	 * Returns the saved NBT value of this modifier. Object is integer by default.
+	 * Returns the saved NBT value of this modifier.
 	 *
-	 * @return Null if this item doesnt have this modifier.
+	 * @return 0 if this item doesnt have this modifier.
 	 */
-	default Object getValue(ItemStack stack) {
+	default int getValue(ItemStack stack) {
 		if (itemHasModifier(stack)) {
 			return stack.getTag().getInt(getModifierName());
 		}
-		return null;
+		return 0;
+	}
+
+	/**
+	 * Returns the saved NBT value of this modifier's attribute. Used for modifiers with multiple attributes.
+	 *
+	 * @return 0 if this item doesnt have this modifier.
+	 */
+	default int getValue(ItemStack stack, Attribute a) {
+		return getValue(stack);
 	}
 
 	/**

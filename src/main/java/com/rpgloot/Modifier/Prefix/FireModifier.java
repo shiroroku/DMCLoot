@@ -1,4 +1,4 @@
-package com.rpgloot.Modifier.Weapon;
+package com.rpgloot.Modifier.Prefix;
 
 import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
@@ -11,8 +11,6 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -20,10 +18,11 @@ import net.minecraftforge.fml.RegistryObject;
 import java.util.Arrays;
 import java.util.List;
 
-public class FrostModifier implements IModifier {
+public class FireModifier implements IModifier {
 
-	private static final String modifierName = "rpgloot.frost";
+	private static final String modifierName = "rpgloot.fire";
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048.0D));
+	private static final RegistryObject<Attribute> ATTRIBUTE2 = AttributeRegistry.ATTRIBUTES.register(modifierName + ".damage", () -> new RangedAttribute("attribute.name." + modifierName + ".damage", 0.0D, 0.0D, 2048.0D));
 
 	@Override
 	public Affix getModifierAffix() {
@@ -37,7 +36,7 @@ public class FrostModifier implements IModifier {
 
 	@Override
 	public List<String> getAdditions() {
-		return Configuration.FROST_ADDITIONS.get();
+		return Configuration.FIRE_ADDITIONS.get();
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class FrostModifier implements IModifier {
 				return 4f + randomDifference;
 			case Epic:
 				return 6f + randomDifference;
-			case Ledgendary:
+			case Legendary:
 				return 8f + randomDifference;
 			case Mythic:
 				return Math.min(12f, 10f + randomDifference);
@@ -67,17 +66,26 @@ public class FrostModifier implements IModifier {
 	}
 
 	@Override
-	public Attribute getAttribute() {
-		return ATTRIBUTE.get();
+	public List<Attribute> getAttribute() {
+		return Arrays.asList(ATTRIBUTE.get(), ATTRIBUTE2.get());
 	}
 
 	@Override
 	public void handleEventRegistry() {
-		MinecraftForge.EVENT_BUS.addListener(FrostModifier::onDamageLiving);
+		MinecraftForge.EVENT_BUS.addListener(FireModifier::onDamageLiving);
+	}
+
+	@Override
+	public int getValue(ItemStack item, Attribute a) {
+		if (a == ATTRIBUTE2.get()) {
+			return getValue(item) / 2;
+		} else {
+			return getValue(item);
+		}
 	}
 
 	private static void onDamageLiving(LivingDamageEvent e) {
-		IModifier mod = ModifierRegistry.MODIFIERS.FROST.get();
+		IModifier mod = ModifierRegistry.MODIFIERS.FIRE.get();
 		if (e.getSource().getEntity() == null) {
 			return;
 		}
@@ -85,7 +93,8 @@ public class FrostModifier implements IModifier {
 			PlayerEntity player = (PlayerEntity) e.getSource().getEntity();
 			ItemStack weapon = player.getMainHandItem();
 			if (mod.itemHasModifier(weapon)) {
-				e.getEntityLiving().addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, Math.round((int) mod.getValue(weapon) * 20f), 2));
+				e.getEntityLiving().setSecondsOnFire(Math.round(mod.getValue(weapon) * 20f));
+				e.setAmount(e.getAmount() + (float) mod.getValue(weapon, ATTRIBUTE2.get()));
 			}
 		}
 	}

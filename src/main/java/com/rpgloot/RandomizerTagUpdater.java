@@ -13,6 +13,13 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class RandomizerTagUpdater {
 
+	/**
+	 * NBT TAGS:
+	 * "rpgloot.randomize:(true/false)"				- Set to true to have the mod randomize the item's modifier and rarity.
+	 * "rpgloot.rarity:(common/uncommon/epic...)	- Specifies the rariy the item should be. (optional)(requires randomize:true)
+	 * "rpgloot.rarity_weights:(12,8,6,3,2,1)		- Specifies the chances of each rarity being applied to this item from common to mythic. (optional)(requires randomize:true)
+	 */
+
 	public static void init() {
 		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemCrafted);
 		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemToss);
@@ -62,29 +69,16 @@ public class RandomizerTagUpdater {
 			if (itemtag.getBoolean("rpgloot.randomize")) {
 				IModifier.Rarity rarity = null;
 				if (itemtag.contains("rpgloot.rarity")) {
-					switch (itemtag.getString("rpgloot.rarity")) {
-						case "common":
-							rarity = IModifier.Rarity.Common;
+					String tagRarity = itemtag.getString("rpgloot.rarity");
+					for (IModifier.Rarity r : IModifier.Rarity.values()) {
+						if (r.toString().equals(tagRarity)) {
+							rarity = r;
 							break;
-						case "uncommon":
-							rarity = IModifier.Rarity.Uncommon;
-							break;
-						case "rare":
-							rarity = IModifier.Rarity.Rare;
-							break;
-						case "epic":
-							rarity = IModifier.Rarity.Epic;
-							break;
-						case "ledgendary":
-							rarity = IModifier.Rarity.Ledgendary;
-							break;
-						case "mythic":
-							rarity = IModifier.Rarity.Mythic;
-							break;
-						default:
-							rarity = IModifier.Rarity.Common;
-							RPGLoot.LOGGER.error("(rpgloot.randomize): (rpgloot.rarity): Rarity specified in itemstack NBT does not exist!");
-							break;
+						}
+					}
+					if (rarity == null) {
+						rarity = IModifier.Rarity.Common;
+						RPGLoot.LOGGER.error("(rpgloot.randomize): (rpgloot.rarity): Rarity specified in itemstack NBT does not exist!");
 					}
 					itemtag.remove("rpgloot.rarity");
 				} else {
@@ -108,7 +102,6 @@ public class RandomizerTagUpdater {
 				ModifierRegistry.applyRandomModifiersTo(stack, rarity);
 
 				itemtag.putBoolean("rpgloot.randomize", false);
-
 				stack.setTag(itemtag);
 			}
 		}

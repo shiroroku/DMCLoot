@@ -15,6 +15,8 @@ public class Configuration {
 
 	public static ForgeConfigSpec.ConfigValue<List<String>> FROST_ADDITIONS;
 	public static ForgeConfigSpec.IntValue FROST_WEIGHT;
+	public static ForgeConfigSpec.ConfigValue<List<String>> FIRE_ADDITIONS;
+	public static ForgeConfigSpec.IntValue FIRE_WEIGHT;
 	public static ForgeConfigSpec.ConfigValue<List<String>> LEARNING_ADDITIONS;
 	public static ForgeConfigSpec.IntValue LEARNING_WEIGHT;
 	public static ForgeConfigSpec.ConfigValue<List<String>> LIFESTEAL_ADDITIONS;
@@ -31,6 +33,7 @@ public class Configuration {
 		MODIFY_ALL = commonBuilder.comment("If all items should recive random modifiers. Else they must be randomized through nbt.").define("modify_all", true);
 		commonBuilder.push("Item Additions").comment("Registry names of items that the modifier should also be applied to.");
 		FROST_ADDITIONS = commonBuilder.define("additions_frost", new ArrayList<>());
+		FIRE_ADDITIONS = commonBuilder.define("additions_fire", new ArrayList<>());
 		LEARNING_ADDITIONS = commonBuilder.define("additions_learning", new ArrayList<>());
 		LIFESTEAL_ADDITIONS = commonBuilder.define("additions_lifesteal", new ArrayList<>());
 		MENDING_ADDITIONS = commonBuilder.define("additions_mending", new ArrayList<>());
@@ -41,6 +44,7 @@ public class Configuration {
 		commonBuilder.push("Modifier Weights");
 		commonBuilder.push("Prefix Weights").comment("Chance of the prefix being chose out of others.");
 		FROST_WEIGHT = commonBuilder.defineInRange("weight_frost", 5, 0, Integer.MAX_VALUE);
+		FIRE_WEIGHT = commonBuilder.defineInRange("weight_fire", 5, 0, Integer.MAX_VALUE);
 		LIFESTEAL_WEIGHT = commonBuilder.defineInRange("weight_lifesteal", 5, 0, Integer.MAX_VALUE);
 		MENDING_WEIGHT = commonBuilder.defineInRange("weight_mending", 5, 0, Integer.MAX_VALUE);
 		commonBuilder.pop();
