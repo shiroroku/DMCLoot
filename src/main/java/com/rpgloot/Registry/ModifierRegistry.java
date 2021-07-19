@@ -6,8 +6,10 @@ import com.rpgloot.Modifier.Prefix.FireModifier;
 import com.rpgloot.Modifier.Prefix.FrostModifier;
 import com.rpgloot.Modifier.Prefix.LifestealModifier;
 import com.rpgloot.Modifier.Prefix.MendingModifier;
+import com.rpgloot.Modifier.Suffix.GuardingModifier;
 import com.rpgloot.Modifier.Suffix.LearningModifier;
 import com.rpgloot.Modifier.Suffix.SpeedModifier;
+import com.rpgloot.Modifier.Suffix.SwiftnessModifier;
 import com.rpgloot.RPGLoot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +29,9 @@ public class ModifierRegistry {
 		LEARNING(Configuration.LEARNING_WEIGHT.get(), new LearningModifier()),
 		SPEED(Configuration.SPEED_WEIGHT.get(), new SpeedModifier()),
 		LIFESTEAL(Configuration.LIFESTEAL_WEIGHT.get(), new LifestealModifier()),
-		MENDING(Configuration.MENDING_WEIGHT.get(), new MendingModifier());
+		MENDING(Configuration.MENDING_WEIGHT.get(), new MendingModifier()),
+		SWIFTNESS(Configuration.SWIFTNESS_WEIGHT.get(), new SwiftnessModifier()),
+		GUARDING(Configuration.GUARDING_WEIGHT.get(), new GuardingModifier());
 
 		private final IModifier modifier;
 		private final int weight;

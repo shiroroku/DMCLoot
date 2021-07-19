@@ -2,21 +2,26 @@ package com.rpgloot.Modifier.Prefix;
 
 import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
+import com.rpgloot.RPGLoot;
 import com.rpgloot.Registry.AttributeRegistry;
 import com.rpgloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class FireModifier implements IModifier {
 
@@ -68,6 +73,12 @@ public class FireModifier implements IModifier {
 	@Override
 	public List<Attribute> getAttribute() {
 		return Arrays.asList(ATTRIBUTE.get(), ATTRIBUTE2.get());
+	}
+
+	@Override
+	public void applyItemAttibute(Attribute a, ItemAttributeModifierEvent e) {
+		UUID uuid = UUID.nameUUIDFromBytes((RPGLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
+		e.addModifier(a, new AttributeModifier(uuid, () -> (RPGLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a), AttributeModifier.Operation.ADDITION));
 	}
 
 	@Override

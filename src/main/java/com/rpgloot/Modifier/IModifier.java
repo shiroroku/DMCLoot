@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -19,8 +18,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IModifier {
-
-	ForgeConfigSpec.IntValue WEIGHT = null;
 
 	enum Affix {
 		Prefix,
@@ -135,12 +132,20 @@ public interface IModifier {
 				for (Attribute a : getAttribute()) {
 					if (!e.getModifiers().containsKey(a)) {
 						if (canApply(e.getItemStack())) {
-							e.addModifier(a, new AttributeModifier(UUID.nameUUIDFromBytes((RPGLoot.MODID + "." + getModifierName()).getBytes()), () -> (RPGLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a), AttributeModifier.Operation.ADDITION));
+							applyItemAttibute(a, e);
 						}
 					}
 				}
 			}
 		}
+	}
+
+	/**
+	 * Applies Attribute to items that have this modifier.
+	 */
+	default void applyItemAttibute(Attribute a, ItemAttributeModifierEvent e) {
+		UUID uuid = UUID.nameUUIDFromBytes((RPGLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
+		e.addModifier(a, new AttributeModifier(uuid, () -> (RPGLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a) / 100f, AttributeModifier.Operation.MULTIPLY_BASE));
 	}
 
 	/**
@@ -150,20 +155,19 @@ public interface IModifier {
 		List<String> additions = getAdditions();
 		List<Class<? extends Item>> itemtypes = getValidItemClasses();
 		boolean add = itemtypes == null || itemtypes.size() == 0;
-		for (Class<? extends Item> type : itemtypes) {
-			if (type.isAssignableFrom(stack.getItem().getClass())) {
-				add = true;
+		if (!add) {
+			for (Class<? extends Item> type : itemtypes) {
+				if (type.isAssignableFrom(stack.getItem().getClass())) {
+					add = true;
+				}
 			}
 		}
 		for (String id : additions) {
 			if (!id.isEmpty()) {
-				String[] idsplit = id.split(":");
-				if (idsplit.length == 2) {
-					Item fromreg = ForgeRegistries.ITEMS.getValue(new ResourceLocation(idsplit[0], idsplit[1]));
-					if (fromreg != null) {
-						if (fromreg.getItem() == stack.getItem()) {
-							add = true;
-						}
+				Item fromreg = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(id));
+				if (fromreg != null) {
+					if (fromreg.getItem() == stack.getItem()) {
+						add = true;
 					}
 				}
 			}
