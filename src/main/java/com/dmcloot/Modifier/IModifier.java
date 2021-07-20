@@ -1,7 +1,7 @@
-package com.rpgloot.Modifier;
+package com.dmcloot.Modifier;
 
-import com.rpgloot.RPGLoot;
-import com.rpgloot.Registry.ModifierRegistry;
+import com.dmcloot.DMCLoot;
+import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -67,21 +67,22 @@ public interface IModifier {
 	 */
 	default float getMultiplierFromRarity(Rarity rarity) {
 		float randomDifference = ModifierRegistry.randomInstance.nextInt(6) - 5;
+		float globalStrength = 0.2f;
 		switch (rarity) {
 			default:
 				return 1f;
 			case Common:
-				return Math.max(5f, 5f + randomDifference);
+				return Math.max(5f, (5f + randomDifference) * globalStrength);
 			case Uncommon:
-				return 10f + randomDifference;
+				return (10f + randomDifference) * globalStrength;
 			case Rare:
-				return 20f + randomDifference;
+				return (20f + randomDifference) * globalStrength;
 			case Epic:
-				return 40f + randomDifference;
+				return (40f + randomDifference) * globalStrength;
 			case Legendary:
-				return 70f + randomDifference;
+				return (70f + randomDifference) * globalStrength;
 			case Mythic:
-				return Math.min(100f, 100f + randomDifference);
+				return Math.min(100f, (100f + randomDifference) * globalStrength);
 		}
 	}
 
@@ -144,8 +145,8 @@ public interface IModifier {
 	 * Applies Attribute to items that have this modifier.
 	 */
 	default void applyItemAttibute(Attribute a, ItemAttributeModifierEvent e) {
-		UUID uuid = UUID.nameUUIDFromBytes((RPGLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
-		e.addModifier(a, new AttributeModifier(uuid, () -> (RPGLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a) / 100f, AttributeModifier.Operation.MULTIPLY_BASE));
+		UUID uuid = UUID.nameUUIDFromBytes((DMCLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
+		e.addModifier(a, new AttributeModifier(uuid, () -> (DMCLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a) / 100f, AttributeModifier.Operation.MULTIPLY_BASE));
 	}
 
 	/**

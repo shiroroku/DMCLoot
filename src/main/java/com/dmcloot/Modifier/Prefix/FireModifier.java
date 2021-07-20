@@ -1,15 +1,14 @@
-package com.rpgloot.Modifier.Prefix;
+package com.dmcloot.Modifier.Prefix;
 
-import com.rpgloot.Configuration;
-import com.rpgloot.Modifier.IModifier;
-import com.rpgloot.RPGLoot;
-import com.rpgloot.Registry.AttributeRegistry;
-import com.rpgloot.Registry.ModifierRegistry;
+import com.dmcloot.Configuration;
+import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.DMCLoot;
+import com.dmcloot.Registry.AttributeRegistry;
+import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,7 +24,7 @@ import java.util.UUID;
 
 public class FireModifier implements IModifier {
 
-	private static final String modifierName = "rpgloot.fire";
+	private static final String modifierName = "dmcloot.fire";
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048.0D));
 	private static final RegistryObject<Attribute> ATTRIBUTE2 = AttributeRegistry.ATTRIBUTES.register(modifierName + ".damage", () -> new RangedAttribute("attribute.name." + modifierName + ".damage", 0.0D, 0.0D, 2048.0D));
 
@@ -77,8 +76,8 @@ public class FireModifier implements IModifier {
 
 	@Override
 	public void applyItemAttibute(Attribute a, ItemAttributeModifierEvent e) {
-		UUID uuid = UUID.nameUUIDFromBytes((RPGLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
-		e.addModifier(a, new AttributeModifier(uuid, () -> (RPGLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a), AttributeModifier.Operation.ADDITION));
+		UUID uuid = UUID.nameUUIDFromBytes((DMCLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
+		e.addModifier(a, new AttributeModifier(uuid, () -> (DMCLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a), AttributeModifier.Operation.ADDITION));
 	}
 
 	@Override

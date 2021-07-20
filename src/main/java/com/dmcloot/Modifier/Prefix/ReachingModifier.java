@@ -1,8 +1,8 @@
-package com.rpgloot.Modifier.Prefix;
+package com.dmcloot.Modifier.Prefix;
 
-import com.rpgloot.Configuration;
-import com.rpgloot.Modifier.IModifier;
-import com.rpgloot.RPGLoot;
+import com.dmcloot.Configuration;
+import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.DMCLoot;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class ReachingModifier implements IModifier {
 
-	private static final String modifierName = "rpgloot.reaching";
+	private static final String modifierName = "dmcloot.reaching";
 
 	@Override
 	public Affix getModifierAffix() {
@@ -58,7 +58,7 @@ public class ReachingModifier implements IModifier {
 
 	@Override
 	public void applyItemAttibute(Attribute a, ItemAttributeModifierEvent e) {
-		UUID uuid = UUID.nameUUIDFromBytes((RPGLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
-		e.addModifier(a, new AttributeModifier(uuid, () -> (RPGLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a) / 100f, AttributeModifier.Operation.MULTIPLY_TOTAL));
+		UUID uuid = UUID.nameUUIDFromBytes((DMCLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
+		e.addModifier(a, new AttributeModifier(uuid, () -> (DMCLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a) / 100f, AttributeModifier.Operation.MULTIPLY_TOTAL));
 	}
 }

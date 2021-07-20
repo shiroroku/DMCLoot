@@ -12,8 +12,8 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.16.5-beta'
-group = 'com.rpgloot'
-archivesBaseName = 'rpgloot'
+group = 'com.dmcloot'
+archivesBaseName = 'dmcloot'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
@@ -27,7 +27,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                rpgloot {
+                dmcloot {
                     source sourceSets.main
                 }
             }
@@ -39,7 +39,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                rpgloot {
+                dmcloot {
                     source sourceSets.main
                 }
             }
@@ -50,10 +50,10 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'rpgloot', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'dmcloot', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                rpgloot {
+                dmcloot {
                     source sourceSets.main
                 }
             }
@@ -84,7 +84,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "rpgloot",
+            "Specification-Title": "dmcloot",
             "Specification-Vendor": "",
             "Specification-Version": "",
             "Implementation-Title": project.name,

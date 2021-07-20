@@ -1,7 +1,7 @@
-package com.rpgloot;
+package com.dmcloot;
 
-import com.rpgloot.Modifier.IModifier;
-import com.rpgloot.Registry.ModifierRegistry;
+import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -78,7 +78,7 @@ public class RandomizerTagUpdater {
 					}
 					if (rarity == null) {
 						rarity = IModifier.Rarity.Common;
-						RPGLoot.LOGGER.error("(rpgloot.randomize): (rpgloot.rarity): Rarity specified in itemstack NBT does not exist!");
+						DMCLoot.LOGGER.error("(rpgloot.randomize): (rpgloot.rarity): Rarity specified in itemstack NBT does not exist!");
 					}
 					itemtag.remove("rpgloot.rarity");
 				} else {

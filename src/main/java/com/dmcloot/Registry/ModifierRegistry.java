@@ -1,13 +1,13 @@
-package com.rpgloot.Registry;
+package com.dmcloot.Registry;
 
-import com.rpgloot.Configuration;
-import com.rpgloot.Modifier.IModifier;
-import com.rpgloot.Modifier.Prefix.*;
-import com.rpgloot.Modifier.Suffix.GuardingModifier;
-import com.rpgloot.Modifier.Suffix.LearningModifier;
-import com.rpgloot.Modifier.Suffix.SpeedModifier;
-import com.rpgloot.Modifier.Suffix.SwiftnessModifier;
-import com.rpgloot.RPGLoot;
+import com.dmcloot.Configuration;
+import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.Modifier.Prefix.*;
+import com.dmcloot.Modifier.Suffix.GuardingModifier;
+import com.dmcloot.Modifier.Suffix.LearningModifier;
+import com.dmcloot.Modifier.Suffix.SpeedModifier;
+import com.dmcloot.Modifier.Suffix.SwiftnessModifier;
+import com.dmcloot.DMCLoot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.IFormattableTextComponent;
@@ -79,7 +79,7 @@ public class ModifierRegistry {
 
 		if (newname != null) {
 			CompoundNBT tag = item.getOrCreateTag();
-			tag.putString("rpgloot.rarity", rarity.toString());
+			tag.putString("dmcloot.rarity", rarity.toString());
 			item.setTag(tag);
 			item.setHoverName(newname.withStyle(Style.EMPTY.withColor(rarity.getColor()).withItalic(false)));
 		}
@@ -119,7 +119,7 @@ public class ModifierRegistry {
 	 */
 	public static IModifier.Rarity getRandomWeightedRarity(Random rand, int[] weights) {
 		if (weights.length != IModifier.Rarity.values().length) {
-			RPGLoot.LOGGER.error("(rpgloot.randomize): (rpgloot.rarity_weights): Rarity values and given weights do not correlate!");
+			DMCLoot.LOGGER.error("(dmcloot.randomize): (dmcloot.rarity_weights): Rarity values and given weights do not correlate!");
 			return null;
 		}
 

@@ -1,9 +1,9 @@
-package com.rpgloot;
+package com.dmcloot;
 
-import com.rpgloot.Registry.AttributeRegistry;
-import com.rpgloot.Setup.ClientSetup;
-import com.rpgloot.Setup.CommonSetup;
-import com.rpgloot.Setup.ServerSetup;
+import com.dmcloot.Registry.AttributeRegistry;
+import com.dmcloot.Setup.ClientSetup;
+import com.dmcloot.Setup.CommonSetup;
+import com.dmcloot.Setup.ServerSetup;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -11,13 +11,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(RPGLoot.MODID)
-public class RPGLoot {
+@Mod(DMCLoot.MODID)
+public class DMCLoot {
 
-	public static final String MODID = "rpgloot";
+	public static final String MODID = "dmcloot";
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	public RPGLoot() {
+	public DMCLoot() {
 		Events.init();
 		AttributeRegistry.init();
 		RandomizerTagUpdater.init();

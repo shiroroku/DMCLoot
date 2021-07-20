@@ -1,9 +1,9 @@
-package com.rpgloot.Modifier.Prefix;
+package com.dmcloot.Modifier.Prefix;
 
-import com.rpgloot.Configuration;
-import com.rpgloot.Modifier.IModifier;
-import com.rpgloot.Registry.AttributeRegistry;
-import com.rpgloot.Registry.ModifierRegistry;
+import com.dmcloot.Configuration;
+import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.Registry.AttributeRegistry;
+import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +25,7 @@ import java.util.Random;
 
 public class MendingModifier implements IModifier {
 
-	private static final String modifierName = "rpgloot.mending";
+	private static final String modifierName = "dmcloot.mending";
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 100.0D));
 
 	@Override

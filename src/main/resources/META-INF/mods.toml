@@ -1,23 +1,23 @@
-license = "All rights reserved"
+license = "MIT"
 loaderVersion = "[36,)"
 modLoader = "javafml"
 [[mods]]
-displayName = "RPGLoot"
-modId = "rpgloot"
+displayName = "DMCLoot"
+modId = "dmcloot"
 version = "${file.jarVersion}"
-#logoFile="rpgloot.png"
+#logoFile="dmcloot.png"
 authors = "Amo, shiroroku(elise)"
 credits = ""
 description = '''
 beepboop description beep
 '''
-[[dependencies.rpgloot]]
+[[dependencies.dmcloot]]
 mandatory = true
 modId = "forge"
 ordering = "NONE"
 side = "BOTH"
 versionRange = "[36,)"
-[[dependencies.rpgloot]]
+[[dependencies.dmcloot]]
 mandatory = true
 modId = "minecraft"
 ordering = "NONE"

@@ -3,7 +3,7 @@ import os
 
 # Settings
 build_path="./build/libs/"
-mod_name = "rpgloot"
+mod_name = "dmcloot"
 mc_version = "1.16.5"
 build = "beta"
 # ====
