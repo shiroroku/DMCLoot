@@ -2,10 +2,7 @@ package com.rpgloot.Registry;
 
 import com.rpgloot.Configuration;
 import com.rpgloot.Modifier.IModifier;
-import com.rpgloot.Modifier.Prefix.FireModifier;
-import com.rpgloot.Modifier.Prefix.FrostModifier;
-import com.rpgloot.Modifier.Prefix.LifestealModifier;
-import com.rpgloot.Modifier.Prefix.MendingModifier;
+import com.rpgloot.Modifier.Prefix.*;
 import com.rpgloot.Modifier.Suffix.GuardingModifier;
 import com.rpgloot.Modifier.Suffix.LearningModifier;
 import com.rpgloot.Modifier.Suffix.SpeedModifier;
@@ -31,7 +28,8 @@ public class ModifierRegistry {
 		LIFESTEAL(Configuration.LIFESTEAL_WEIGHT.get(), new LifestealModifier()),
 		MENDING(Configuration.MENDING_WEIGHT.get(), new MendingModifier()),
 		SWIFTNESS(Configuration.SWIFTNESS_WEIGHT.get(), new SwiftnessModifier()),
-		GUARDING(Configuration.GUARDING_WEIGHT.get(), new GuardingModifier());
+		GUARDING(Configuration.GUARDING_WEIGHT.get(), new GuardingModifier()),
+		REACHING(Configuration.REACHING_WEIGHT.get(), new ReachingModifier());
 
 		private final IModifier modifier;
 		private final int weight;

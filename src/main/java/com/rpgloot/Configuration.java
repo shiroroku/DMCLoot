@@ -29,6 +29,8 @@ public class Configuration {
 	public static ForgeConfigSpec.IntValue SWIFTNESS_WEIGHT;
 	public static ForgeConfigSpec.ConfigValue<List<String>> GUARDING_ADDITIONS;
 	public static ForgeConfigSpec.IntValue GUARDING_WEIGHT;
+	public static ForgeConfigSpec.ConfigValue<List<String>> REACHING_ADDITIONS;
+	public static ForgeConfigSpec.IntValue REACHING_WEIGHT;
 
 	static {
 		ForgeConfigSpec.Builder commonBuilder = new ForgeConfigSpec.Builder();
@@ -44,6 +46,7 @@ public class Configuration {
 		SPEED_ADDITIONS = commonBuilder.define("additions_speed", new ArrayList<>());
 		SWIFTNESS_ADDITIONS = commonBuilder.define("additions_swiftness", new ArrayList<>());
 		GUARDING_ADDITIONS = commonBuilder.define("additions_guarding", new ArrayList<>());
+		REACHING_ADDITIONS = commonBuilder.define("additions_reaching", new ArrayList<>());
 		commonBuilder.pop();
 		commonBuilder.pop();
 
@@ -53,6 +56,7 @@ public class Configuration {
 		FIRE_WEIGHT = commonBuilder.defineInRange("weight_fire", 5, 0, Integer.MAX_VALUE);
 		LIFESTEAL_WEIGHT = commonBuilder.defineInRange("weight_lifesteal", 5, 0, Integer.MAX_VALUE);
 		MENDING_WEIGHT = commonBuilder.defineInRange("weight_mending", 5, 0, Integer.MAX_VALUE);
+		REACHING_WEIGHT = commonBuilder.defineInRange("weight_reaching", 5, 0, Integer.MAX_VALUE);
 		commonBuilder.pop();
 		commonBuilder.comment("Chance of the suffix being chose out of others.").push("Suffix Weights");
 		LEARNING_WEIGHT = commonBuilder.defineInRange("weight_learning", 5, 0, Integer.MAX_VALUE);

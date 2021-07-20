@@ -66,15 +66,15 @@ public class Events {
 		if (e.getModifiers().isEmpty()) {
 			return;
 		}
-		boolean hasModifier = false;
+		boolean hasaModifier = false;
 		for (ModifierRegistry.MODIFIERS modifier : ModifierRegistry.MODIFIERS.values()) {
 			if (modifier.get().itemHasModifier(e.getItemStack())) {
-				hasModifier = true;
+				hasaModifier = true;
 				break;
 			}
 		}
 
-		if (hasModifier) {
+		if (hasaModifier) {
 			Multimap<Attribute, AttributeModifier> unmodifiableModifiers = TreeMultimap.create(Comparator.comparing(ForgeRegistryEntry::getRegistryName), (value1, value2) -> {
 				int nameCompare = Integer.compare(value1.getOperation().ordinal(), value2.getOperation().ordinal());
 				int valueCompare = Double.compare(value2.getAmount(), value1.getAmount());
