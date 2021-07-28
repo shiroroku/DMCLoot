@@ -31,6 +31,8 @@ public class Configuration {
 	public static ForgeConfigSpec.IntValue GUARDING_WEIGHT;
 	public static ForgeConfigSpec.ConfigValue<List<String>> REACHING_ADDITIONS;
 	public static ForgeConfigSpec.IntValue REACHING_WEIGHT;
+	public static ForgeConfigSpec.ConfigValue<List<String>> REGENERATION_ADDITIONS;
+	public static ForgeConfigSpec.IntValue REGENERATION_WEIGHT;
 
 	static {
 		ForgeConfigSpec.Builder commonBuilder = new ForgeConfigSpec.Builder();
@@ -47,6 +49,7 @@ public class Configuration {
 		SWIFTNESS_ADDITIONS = commonBuilder.define("additions_swiftness", new ArrayList<>());
 		GUARDING_ADDITIONS = commonBuilder.define("additions_guarding", new ArrayList<>());
 		REACHING_ADDITIONS = commonBuilder.define("additions_reaching", new ArrayList<>());
+		REGENERATION_ADDITIONS = commonBuilder.define("additions_regenearation", new ArrayList<>());
 		commonBuilder.pop();
 		commonBuilder.pop();
 
@@ -63,6 +66,7 @@ public class Configuration {
 		SPEED_WEIGHT = commonBuilder.defineInRange("weight_speed", 5, 0, Integer.MAX_VALUE);
 		SWIFTNESS_WEIGHT = commonBuilder.defineInRange("weight_swiftness", 5, 0, Integer.MAX_VALUE);
 		GUARDING_WEIGHT = commonBuilder.defineInRange("weight_guarding", 5, 0, Integer.MAX_VALUE);
+		REGENERATION_WEIGHT = commonBuilder.defineInRange("weight_regeneration", 5, 0, Integer.MAX_VALUE);
 		commonBuilder.pop();
 		commonBuilder.pop();
 

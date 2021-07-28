@@ -1,5 +1,6 @@
 package com.dmcloot.Modifier;
 
+import com.dmcloot.CuriosCompat;
 import com.dmcloot.DMCLoot;
 import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -128,6 +129,10 @@ public interface IModifier {
 	 * Handles what items the modifier's Attribute should be applied to.
 	 */
 	default void handleItemAttribute(ItemAttributeModifierEvent e) {
+		if (CuriosCompat.isCurio(e.getItemStack())) {
+			//CuriosCompat.handleItemAttribute(e, this);
+			return;
+		}
 		for (EquipmentSlotType slot : getValidSlotTypes(e.getItemStack())) {
 			if (e.getSlotType() == slot) {
 				for (Attribute a : getAttribute()) {
@@ -150,7 +155,7 @@ public interface IModifier {
 	}
 
 	/**
-	 * Returns if the stack can support this modifier. Use getValidSlotTypes to specify classes.
+	 * Returns if the stack can support this modifier. Use getValidItemClasses to specify classes.
 	 */
 	default boolean canApply(ItemStack stack) {
 		List<String> additions = getAdditions();
@@ -165,9 +170,11 @@ public interface IModifier {
 		}
 		for (String id : additions) {
 			if (!id.isEmpty()) {
-				Item fromreg = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(id));
-				if (fromreg != null) {
-					if (fromreg.getItem() == stack.getItem()) {
+				if (id.startsWith("#") && stack.getItem().getTags().contains(ResourceLocation.tryParse(id.replace("#", "")))) {
+					add = true;
+				} else {
+					Item fromreg = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(id));
+					if (fromreg != null && fromreg.getItem() == stack.getItem()) {
 						add = true;
 					}
 				}

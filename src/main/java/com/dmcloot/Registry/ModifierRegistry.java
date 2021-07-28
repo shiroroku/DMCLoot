@@ -3,10 +3,7 @@ package com.dmcloot.Registry;
 import com.dmcloot.Configuration;
 import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Modifier.Prefix.*;
-import com.dmcloot.Modifier.Suffix.GuardingModifier;
-import com.dmcloot.Modifier.Suffix.LearningModifier;
-import com.dmcloot.Modifier.Suffix.SpeedModifier;
-import com.dmcloot.Modifier.Suffix.SwiftnessModifier;
+import com.dmcloot.Modifier.Suffix.*;
 import com.dmcloot.DMCLoot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -29,7 +26,8 @@ public class ModifierRegistry {
 		MENDING(Configuration.MENDING_WEIGHT.get(), new MendingModifier()),
 		SWIFTNESS(Configuration.SWIFTNESS_WEIGHT.get(), new SwiftnessModifier()),
 		GUARDING(Configuration.GUARDING_WEIGHT.get(), new GuardingModifier()),
-		REACHING(Configuration.REACHING_WEIGHT.get(), new ReachingModifier());
+		REACHING(Configuration.REACHING_WEIGHT.get(), new ReachingModifier()),
+		REGENERATION(Configuration.REGENERATION_WEIGHT.get(), new RegenerationModifier());
 
 		private final IModifier modifier;
 		private final int weight;

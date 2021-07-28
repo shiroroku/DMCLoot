@@ -1,8 +1,8 @@
 package com.dmcloot;
 
+import com.dmcloot.Registry.ModifierRegistry;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
-import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.MinecraftForge;

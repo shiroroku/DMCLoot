@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class ModifierJsonReloader extends JsonReloadListener {
 
-
 	public ModifierJsonReloader() {
 		super((new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create(), "modifiers");
 	}
