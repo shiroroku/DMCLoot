@@ -15,6 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,19 +36,15 @@ public class RegenerationModifier implements IModifier {
 
 	@Override
 	public List<Class<? extends Item>> getValidItemClasses() {
-		return Collections.singletonList(ArmorItem.class);
+		return Arrays.asList(ArmorItem.class, ShieldItem.class);
 	}
 
 	@Override
 	public EquipmentSlotType[] getValidSlotTypes(ItemStack itemStack) {
 		if (itemStack.getItem() instanceof ArmorItem) {
 			return new EquipmentSlotType[] { ((ArmorItem) itemStack.getItem()).getSlot() };
-		} else {
-			if (itemStack.getItem() instanceof ShieldItem) {
-				return new EquipmentSlotType[] { EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND };
-			}
 		}
-		return new EquipmentSlotType[] {};
+		return new EquipmentSlotType[] { EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND };
 	}
 
 	@Override
@@ -70,9 +67,21 @@ public class RegenerationModifier implements IModifier {
 			return;
 		}
 		IModifier modifier = ModifierRegistry.MODIFIERS.REGENERATION.get();
+		float baseHealing = 0.005f;
+
+		ItemStack mainHand = e.player.getMainHandItem();
+		if (modifier.itemHasModifier(mainHand)) {
+			e.player.heal((modifier.getValue(mainHand) / 100f) * e.player.getMaxHealth() * baseHealing);
+		}
+
+		ItemStack offHand = e.player.getOffhandItem();
+		if (modifier.itemHasModifier(offHand)) {
+			e.player.heal((modifier.getValue(offHand) / 100f) * e.player.getMaxHealth() * baseHealing);
+		}
+
 		for (ItemStack armor : e.player.getArmorSlots()) {
 			if (modifier.itemHasModifier(armor)) {
-				e.player.heal((modifier.getValue(armor) / 100f) * e.player.getMaxHealth() * 0.005f);
+				e.player.heal((modifier.getValue(armor) / 100f) * e.player.getMaxHealth() * baseHealing);
 			}
 		}
 	}
