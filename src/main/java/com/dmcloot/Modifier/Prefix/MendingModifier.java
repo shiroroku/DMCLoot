@@ -15,6 +15,8 @@ import net.minecraft.item.TieredItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -67,6 +69,7 @@ public class MendingModifier implements IModifier {
 		MinecraftForge.EVENT_BUS.addListener(MendingModifier::onBlockBreak);
 		MinecraftForge.EVENT_BUS.addListener(MendingModifier::onDamageLiving);
 		MinecraftForge.EVENT_BUS.addListener(MendingModifier::onLivingHurt);
+		MinecraftForge.EVENT_BUS.addListener(MendingModifier::onUseHoeEvent);
 
 	}
 
@@ -76,6 +79,14 @@ public class MendingModifier implements IModifier {
 				stack.setDamageValue(stack.getDamageValue() - 2);
 			}
 		}
+	}
+
+	/**
+	 * When the player uses a hoe.
+	 */
+	private static void onUseHoeEvent(UseHoeEvent e) {
+		IModifier modifier = ModifierRegistry.MODIFIERS.MENDING.get();
+		processModifier(modifier, e.getPlayer().getRandom(), e.getPlayer().getMainHandItem());
 	}
 
 	/**
