@@ -1,5 +1,6 @@
 package com.dmcloot.Modifier;
 
+import com.dmcloot.Configuration;
 import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -18,19 +19,25 @@ public interface IModifier {
 	}
 
 	enum Rarity {
-		Common(TextFormatting.WHITE, "common"),
-		Uncommon(TextFormatting.GREEN, "uncommon"),
-		Rare(TextFormatting.BLUE, "rare"),
-		Epic(TextFormatting.DARK_PURPLE, "epic"),
-		Legendary(TextFormatting.GOLD, "legendary"),
-		Mythic(TextFormatting.RED, "mythic");
+		Common(TextFormatting.WHITE, "common", Configuration.COMMON_WEIGHT.get()),
+		Uncommon(TextFormatting.GREEN, "uncommon", Configuration.UNCOMMON_WEIGHT.get()),
+		Rare(TextFormatting.BLUE, "rare", Configuration.RARE_WEIGHT.get()),
+		Epic(TextFormatting.DARK_PURPLE, "epic", Configuration.EPIC_WEIGHT.get()),
+		Legendary(TextFormatting.GOLD, "legendary", Configuration.LEGENDARY_WEIGHT.get()),
+		Mythic(TextFormatting.RED, "mythic", Configuration.MYTHIC_WEIGHT.get());
 
 		private final TextFormatting color;
 		private final String name;
+		private final int weight;
 
-		Rarity(TextFormatting color, String name) {
+		Rarity(TextFormatting color, String name, int weight) {
 			this.color = color;
 			this.name = name;
+			this.weight = weight;
+		}
+
+		public int getWeight() {
+			return this.weight;
 		}
 
 		public TextFormatting getColor() {
@@ -60,7 +67,7 @@ public interface IModifier {
 	 */
 	default float getMultiplierFromRarity(Rarity rarity) {
 		float randomDifference = ModifierRegistry.randomInstance.nextInt(6) - 5;
-		float globalStrength = 0.2f;
+		float globalStrength = Configuration.GLOBAL_STRENGTH_MODIFIER.get().floatValue();
 		switch (rarity) {
 			default:
 				return 1f;
@@ -109,7 +116,6 @@ public interface IModifier {
 	default int getDefaultValue() {
 		return 1;
 	}
-
 
 	/**
 	 * Returns the saved NBT value of this modifier.

@@ -92,12 +92,12 @@ public class RandomizerTagUpdater {
 								weights[i] = 0;
 							}
 						}
-						rarity = ModifierRegistry.getRandomWeightedRarity(ModifierRegistry.randomInstance, weights);
+						rarity = ModifierRegistry.getRandomRarityWithWeights(ModifierRegistry.randomInstance, weights);
 						itemtag.remove("rpgloot.rarity_weights");
 					}
 				}
 				if (rarity == null) {
-					rarity = ModifierRegistry.getRandomRarity(ModifierRegistry.randomInstance);
+					rarity = ModifierRegistry.getRandomWeightedRarity(ModifierRegistry.randomInstance);
 				}
 				ModifierRegistry.applyRandomModifiersTo(stack, rarity);
 

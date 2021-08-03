@@ -40,11 +40,11 @@ public abstract class ModifierBase implements IModifier {
 	}
 
 	public void buildAdditionsConfig(ForgeConfigSpec.Builder builder) {
-		ADDITIONS = builder.define("additions_" + this.getModifierName(), new ArrayList<>());
+		ADDITIONS = builder.define(this.getModifierName().split("\\.")[1], new ArrayList<>());
 	}
 
 	public void buildWeightConfig(ForgeConfigSpec.Builder builder) {
-		WEIGHT = builder.defineInRange("weight_" + this.getModifierName(), 5, 0, Integer.MAX_VALUE);
+		WEIGHT = builder.defineInRange(this.getModifierName().split("\\.")[1], 5, 0, Integer.MAX_VALUE);
 	}
 
 	public int getWeight() {

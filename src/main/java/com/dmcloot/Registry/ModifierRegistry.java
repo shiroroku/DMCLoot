@@ -107,9 +107,9 @@ public class ModifierRegistry {
 	}
 
 	/**
-	 * Gets a random weighted rarity of the type from the registry
+	 * Gets a random registry with the given weights
 	 */
-	public static IModifier.Rarity getRandomWeightedRarity(Random rand, int[] weights) {
+	public static IModifier.Rarity getRandomRarityWithWeights(Random rand, int[] weights) {
 		if (weights.length != IModifier.Rarity.values().length) {
 			DMCLoot.LOGGER.error("(dmcloot.randomize): (dmcloot.rarity_weights): Rarity values and given weights do not correlate!");
 			return null;
@@ -133,8 +133,22 @@ public class ModifierRegistry {
 		return null;
 	}
 
-	public static IModifier.Rarity getRandomRarity(Random rand) {
-		return IModifier.Rarity.values()[rand.nextInt(IModifier.Rarity.values().length)];
+	/**
+	 * Gets a random weighted rarity of the type from the registry
+	 */
+	public static IModifier.Rarity getRandomWeightedRarity(Random rand) {
+		int total = 0;
+		for (IModifier.Rarity rarity : IModifier.Rarity.values()) {
+			total += rarity.getWeight();
+		}
+		int random = rand.nextInt(total) + 1;
+		for (IModifier.Rarity rarity : IModifier.Rarity.values()) {
+			random -= rarity.getWeight();
+			if (random <= 0) {
+				return rarity;
+			}
+		}
+		return null;
 	}
 
 }
