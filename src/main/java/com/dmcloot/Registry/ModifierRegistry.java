@@ -27,7 +27,8 @@ public class ModifierRegistry {
 		SWIFTNESS(new SwiftnessModifier()),
 		GUARDING(new GuardingModifier()),
 		REACHING(new ReachingModifier()),
-		REGENERATION(new RegenerationModifier());
+		REGENERATION(new RegenerationModifier()),
+		AQUATIC(new AquaticModifier());
 
 		private final ModifierBase modifier;
 
