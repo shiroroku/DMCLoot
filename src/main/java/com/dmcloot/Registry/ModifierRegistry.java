@@ -1,5 +1,6 @@
 package com.dmcloot.Registry;
 
+import com.dmcloot.Configuration;
 import com.dmcloot.DMCLoot;
 import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Modifier.ModifierBase;
@@ -79,9 +80,13 @@ public class ModifierRegistry {
 	}
 
 	/**
-	 * Gets a random weighted modifier of the type from the registry. Returns null if it can't find modifiers.
+	 * Gets a random weighted modifier of the type from the registry. Returns null if no modifier.
 	 */
 	public static ModifierBase getRandomModifierFor(IModifier.Affix type, ItemStack stack) {
+		if (Configuration.EMPTY_AFFIX_CHANCE.get() != 0.0D && (Configuration.EMPTY_AFFIX_CHANCE.get() == 1.0D || randomInstance.nextDouble() <= Configuration.EMPTY_AFFIX_CHANCE.get())) {
+			return null;
+		}
+
 		int total = 0;
 		for (MODIFIERS mod : MODIFIERS.values()) {
 			if (mod.get().canApply(stack)) {
