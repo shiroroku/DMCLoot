@@ -1,8 +1,7 @@
 package com.dmcloot.Modifier.Suffix;
 
-import com.dmcloot.Configuration;
-import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.DMCLoot;
+import com.dmcloot.Modifier.ModifierBase;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -18,18 +17,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class SwiftnessModifier implements IModifier {
+public class SwiftnessModifier extends ModifierBase {
 
-	private static final String modifierName = "dmcloot.swiftness";
-
-	@Override
-	public Affix getModifierAffix() {
-		return Affix.Suffix;
+	public SwiftnessModifier() {
+		super("dmcloot.swiftness", Affix.Suffix);
 	}
 
 	@Override
-	public List<String> getAdditions() {
-		return Configuration.SWIFTNESS_ADDITIONS.get();
+	public List<Attribute> getAttribute() {
+		return Collections.singletonList(Attributes.MOVEMENT_SPEED);
 	}
 
 	@Override
@@ -44,16 +40,6 @@ public class SwiftnessModifier implements IModifier {
 		} else {
 			return new EquipmentSlotType[] { EquipmentSlotType.MAINHAND };
 		}
-	}
-
-	@Override
-	public String getModifierName() {
-		return modifierName;
-	}
-
-	@Override
-	public List<Attribute> getAttribute() {
-		return Collections.singletonList(Attributes.MOVEMENT_SPEED);
 	}
 
 	@Override

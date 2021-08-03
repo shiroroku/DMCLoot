@@ -1,8 +1,7 @@
 package com.dmcloot.Modifier.Suffix;
 
-import com.dmcloot.Configuration;
-import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.DMCLoot;
+import com.dmcloot.Modifier.ModifierBase;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -11,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.item.TieredItem;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 
 import java.util.Arrays;
@@ -18,18 +18,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class GuardingModifier implements IModifier {
+public class GuardingModifier extends ModifierBase {
 
-	private static final String modifierName = "dmcloot.guarding";
-
-	@Override
-	public Affix getModifierAffix() {
-		return Affix.Suffix;
+	public GuardingModifier() {
+		super("dmcloot.guarding", Affix.Suffix);
 	}
 
 	@Override
-	public List<String> getAdditions() {
-		return Configuration.GUARDING_ADDITIONS.get();
+	public List<Attribute> getAttribute() {
+		return Collections.singletonList(Attributes.ARMOR);
 	}
 
 	@Override
@@ -40,16 +37,6 @@ public class GuardingModifier implements IModifier {
 	@Override
 	public EquipmentSlotType[] getValidSlotTypes(ItemStack itemStack) {
 		return new EquipmentSlotType[] { EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND };
-	}
-
-	@Override
-	public String getModifierName() {
-		return modifierName;
-	}
-
-	@Override
-	public List<Attribute> getAttribute() {
-		return Collections.singletonList(Attributes.ARMOR);
 	}
 
 	@Override

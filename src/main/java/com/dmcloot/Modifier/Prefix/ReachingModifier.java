@@ -1,8 +1,7 @@
 package com.dmcloot.Modifier.Prefix;
 
-import com.dmcloot.Configuration;
-import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.DMCLoot;
+import com.dmcloot.Modifier.ModifierBase;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -18,13 +17,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class ReachingModifier implements IModifier {
+public class ReachingModifier extends ModifierBase {
 
-	private static final String modifierName = "dmcloot.reaching";
+	public ReachingModifier() {
+		super("dmcloot.reaching", Affix.Prefix);
+	}
 
 	@Override
-	public Affix getModifierAffix() {
-		return Affix.Prefix;
+	public List<Attribute> getAttribute() {
+		return Collections.singletonList(ForgeMod.REACH_DISTANCE.get());
 	}
 
 	@Override
@@ -39,21 +40,6 @@ public class ReachingModifier implements IModifier {
 		} else {
 			return new EquipmentSlotType[] { EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND };
 		}
-	}
-
-	@Override
-	public List<String> getAdditions() {
-		return Configuration.REACHING_ADDITIONS.get();
-	}
-
-	@Override
-	public String getModifierName() {
-		return modifierName;
-	}
-
-	@Override
-	public List<Attribute> getAttribute() {
-		return Collections.singletonList(ForgeMod.REACH_DISTANCE.get());
 	}
 
 	@Override

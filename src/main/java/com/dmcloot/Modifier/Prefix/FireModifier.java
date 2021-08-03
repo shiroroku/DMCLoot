@@ -1,8 +1,8 @@
 package com.dmcloot.Modifier.Prefix;
 
-import com.dmcloot.Configuration;
-import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.DMCLoot;
+import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.Modifier.ModifierBase;
 import com.dmcloot.Registry.AttributeRegistry;
 import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -22,25 +22,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class FireModifier implements IModifier {
+public class FireModifier extends ModifierBase {
 
 	private static final String modifierName = "dmcloot.fire";
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048.0D));
 	private static final RegistryObject<Attribute> ATTRIBUTE2 = AttributeRegistry.ATTRIBUTES.register(modifierName + ".damage", () -> new RangedAttribute("attribute.name." + modifierName + ".damage", 0.0D, 0.0D, 2048.0D));
 
-	@Override
-	public Affix getModifierAffix() {
-		return Affix.Prefix;
+	public FireModifier() {
+		super(modifierName, Affix.Prefix);
 	}
+
+	@Override
+	public List<Attribute> getAttribute() {
+		return Arrays.asList(ATTRIBUTE.get(), ATTRIBUTE2.get());
+	}
+
 
 	@Override
 	public List<Class<? extends Item>> getValidItemClasses() {
 		return Arrays.asList(SwordItem.class, AxeItem.class);
-	}
-
-	@Override
-	public List<String> getAdditions() {
-		return Configuration.FIRE_ADDITIONS.get();
 	}
 
 	@Override
@@ -62,16 +62,6 @@ public class FireModifier implements IModifier {
 			case Mythic:
 				return Math.min(12f, 10f + randomDifference);
 		}
-	}
-
-	@Override
-	public String getModifierName() {
-		return modifierName;
-	}
-
-	@Override
-	public List<Attribute> getAttribute() {
-		return Arrays.asList(ATTRIBUTE.get(), ATTRIBUTE2.get());
 	}
 
 	@Override

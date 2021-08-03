@@ -1,10 +1,10 @@
 package com.dmcloot.Registry;
 
-import com.dmcloot.Configuration;
+import com.dmcloot.DMCLoot;
 import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.Modifier.ModifierBase;
 import com.dmcloot.Modifier.Prefix.*;
 import com.dmcloot.Modifier.Suffix.*;
-import com.dmcloot.DMCLoot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.IFormattableTextComponent;
@@ -18,31 +18,25 @@ public class ModifierRegistry {
 	public static final Random randomInstance = new Random();
 
 	public enum MODIFIERS {
-		FROST(Configuration.FROST_WEIGHT.get(), new FrostModifier()),
-		FIRE(Configuration.FIRE_WEIGHT.get(), new FireModifier()),
-		LEARNING(Configuration.LEARNING_WEIGHT.get(), new LearningModifier()),
-		SPEED(Configuration.SPEED_WEIGHT.get(), new SpeedModifier()),
-		LIFESTEAL(Configuration.LIFESTEAL_WEIGHT.get(), new LifestealModifier()),
-		MENDING(Configuration.MENDING_WEIGHT.get(), new MendingModifier()),
-		SWIFTNESS(Configuration.SWIFTNESS_WEIGHT.get(), new SwiftnessModifier()),
-		GUARDING(Configuration.GUARDING_WEIGHT.get(), new GuardingModifier()),
-		REACHING(Configuration.REACHING_WEIGHT.get(), new ReachingModifier()),
-		REGENERATION(Configuration.REGENERATION_WEIGHT.get(), new RegenerationModifier());
+		FROST(new FrostModifier()),
+		FIRE(new FireModifier()),
+		LEARNING(new LearningModifier()),
+		SPEED(new SpeedModifier()),
+		LIFESTEAL(new LifestealModifier()),
+		MENDING(new MendingModifier()),
+		SWIFTNESS(new SwiftnessModifier()),
+		GUARDING(new GuardingModifier()),
+		REACHING(new ReachingModifier()),
+		REGENERATION(new RegenerationModifier());
 
-		private final IModifier modifier;
-		private final int weight;
+		private final ModifierBase modifier;
 
-		MODIFIERS(int weight, IModifier m) {
+		MODIFIERS(ModifierBase m) {
 			this.modifier = m;
-			this.weight = weight;
 		}
 
-		public IModifier get() {
+		public ModifierBase get() {
 			return this.modifier;
-		}
-
-		public int getWeight() {
-			return this.weight;
 		}
 
 	}
@@ -50,8 +44,8 @@ public class ModifierRegistry {
 	public static void applyRandomModifiersTo(ItemStack item, IModifier.Rarity rarity) {
 		TextComponent original = (TextComponent) item.getHoverName();
 
-		IModifier prefix = getRandomModifierFor(IModifier.Affix.Prefix, item);
-		IModifier suffix = getRandomModifierFor(IModifier.Affix.Suffix, item);
+		ModifierBase prefix = getRandomModifierFor(IModifier.Affix.Prefix, item);
+		ModifierBase suffix = getRandomModifierFor(IModifier.Affix.Suffix, item);
 
 		IFormattableTextComponent newname = null;
 
@@ -86,12 +80,12 @@ public class ModifierRegistry {
 	/**
 	 * Gets a random weighted modifier of the type from the registry. Returns null if it can't find modifiers.
 	 */
-	public static IModifier getRandomModifierFor(IModifier.Affix type, ItemStack stack) {
+	public static ModifierBase getRandomModifierFor(IModifier.Affix type, ItemStack stack) {
 		int total = 0;
 		for (MODIFIERS mod : MODIFIERS.values()) {
 			if (mod.get().canApply(stack)) {
 				if (mod.get().getModifierAffix() == type) {
-					total += mod.getWeight();
+					total += mod.get().getWeight();
 				}
 			}
 		}
@@ -102,7 +96,7 @@ public class ModifierRegistry {
 		for (MODIFIERS mod : MODIFIERS.values()) {
 			if (mod.get().getModifierAffix() == type) {
 				if (mod.get().canApply(stack)) {
-					random -= mod.getWeight();
+					random -= mod.get().getWeight();
 					if (random <= 0) {
 						return mod.get();
 					}
@@ -142,4 +136,5 @@ public class ModifierRegistry {
 	public static IModifier.Rarity getRandomRarity(Random rand) {
 		return IModifier.Rarity.values()[rand.nextInt(IModifier.Rarity.values().length)];
 	}
+
 }
