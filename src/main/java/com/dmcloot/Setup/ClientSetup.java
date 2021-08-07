@@ -1,7 +1,7 @@
 package com.dmcloot.Setup;
 
-import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.DMCLoot;
+import com.dmcloot.Modifier.IModifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.Style;
@@ -35,16 +35,20 @@ public class ClientSetup {
 			}
 
 			//Special, for modpack
-			if (e.getToolTip().get(1).getString().equals("Common")) {
-				e.getToolTip().remove(1);
+			if(e.getToolTip().size() >= 2) {
+				if (e.getToolTip().get(1).getString().equals("Common")) {
+					e.getToolTip().remove(1);
+				}
 			}
 			//====
 
-			java.awt.Color darker = customDarker(new java.awt.Color(rarity.getColor().getColor()));
-			e.getToolTip().add(1, new TranslationTextComponent("rarity.dmcloot." + rarity).setStyle(Style.EMPTY.withColor(Color.fromRgb(darker.getRGB()))));
+			e.getToolTip().add(1, new TranslationTextComponent("rarity.dmcloot." + rarity).setStyle(Style.EMPTY.withColor(Color.fromRgb(customDarker(new java.awt.Color(rarity.getColor().getColor())).getRGB()))));
 		}
 	}
 
+	/**
+	 * Darkens the color by 0.68, instead of default 0.70
+	 */
 	private static java.awt.Color customDarker(java.awt.Color color) {
 		return new java.awt.Color(Math.max((int) (color.getRed() * (float) 0.68), 0), Math.max((int) (color.getGreen() * (float) 0.68), 0), Math.max((int) (color.getBlue() * (float) 0.68), 0), color.getAlpha());
 	}
