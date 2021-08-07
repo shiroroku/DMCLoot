@@ -10,10 +10,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -42,7 +39,7 @@ public class LearningModifier extends ModifierBase {
 
 	@Override
 	public List<Class<? extends Item>> getValidItemClasses() {
-		return Arrays.asList(SwordItem.class, AxeItem.class);
+		return Arrays.asList(SwordItem.class, AxeItem.class, BowItem.class, CrossbowItem.class);
 	}
 
 	@Override

@@ -19,6 +19,8 @@
     "modifier.name.dmcloot.reaching": "Reaching",
     "modifier.name.dmcloot.regeneration": "of Regeneration",
     "attribute.name.dmcloot.regeneration": "Healing Rate",
+    "modifier.name.dmcloot.critical": "Critical",
+    "attribute.name.dmcloot.critical": "Critical Chance",
     "rarity.dmcloot.common": "Common",
     "rarity.dmcloot.uncommon": "Uncommon",
     "rarity.dmcloot.rare": "Rare",

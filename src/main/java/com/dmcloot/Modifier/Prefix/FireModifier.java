@@ -9,10 +9,7 @@ import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -40,7 +37,7 @@ public class FireModifier extends ModifierBase {
 
 	@Override
 	public List<Class<? extends Item>> getValidItemClasses() {
-		return Arrays.asList(SwordItem.class, AxeItem.class);
+		return Arrays.asList(SwordItem.class, AxeItem.class, BowItem.class, CrossbowItem.class);
 	}
 
 	@Override

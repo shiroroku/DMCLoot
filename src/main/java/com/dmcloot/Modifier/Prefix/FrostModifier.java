@@ -1,8 +1,7 @@
 package com.dmcloot.Modifier.Prefix;
 
-import com.dmcloot.Configuration;
-import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.DMCLoot;
+import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Modifier.ModifierBase;
 import com.dmcloot.Registry.AttributeRegistry;
 import com.dmcloot.Registry.ModifierRegistry;
@@ -10,10 +9,7 @@ import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,7 +17,6 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
 
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -43,7 +38,7 @@ public class FrostModifier extends ModifierBase {
 
 	@Override
 	public List<Class<? extends Item>> getValidItemClasses() {
-		return Arrays.asList(SwordItem.class, AxeItem.class);
+		return Arrays.asList(SwordItem.class, AxeItem.class, BowItem.class, CrossbowItem.class);
 	}
 
 	@Override
@@ -72,7 +67,6 @@ public class FrostModifier extends ModifierBase {
 		UUID uuid = UUID.nameUUIDFromBytes((DMCLoot.MODID + "." + getModifierName() + "." + e.getSlotType().getName()).getBytes());
 		e.addModifier(a, new AttributeModifier(uuid, () -> (DMCLoot.MODID + "." + getModifierName()), this.getValue(e.getItemStack(), a), AttributeModifier.Operation.ADDITION));
 	}
-
 
 	@Override
 	public void handleEventRegistry() {

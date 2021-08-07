@@ -29,6 +29,7 @@ public class ModifierRegistry {
 		GUARDING(new GuardingModifier()),
 		REACHING(new ReachingModifier()),
 		REGENERATION(new RegenerationModifier()),
+		CRITICAL(new CriticalModifier()),
 		AQUATIC(new AquaticModifier());
 
 		private final ModifierBase modifier;
