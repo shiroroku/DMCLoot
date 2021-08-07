@@ -22,7 +22,7 @@ import java.util.List;
 public class LifestealModifier extends ModifierBase {
 
 	private static final String modifierName = "dmcloot.lifesteal";
-	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 100.0D));
+	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048D));
 
 	public LifestealModifier() {
 		super(modifierName, Affix.Prefix);

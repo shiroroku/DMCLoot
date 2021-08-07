@@ -67,22 +67,21 @@ public interface IModifier {
 	 */
 	default float getMultiplierFromRarity(Rarity rarity) {
 		float randomDifference = ModifierRegistry.randomInstance.nextInt(6) - 5;
-		float globalStrength = Configuration.GLOBAL_STRENGTH_MODIFIER.get().floatValue();
 		switch (rarity) {
 			default:
 				return 1f;
 			case Common:
-				return Math.max(5f, (5f + randomDifference) * globalStrength);
+				return Math.max(5f, (5f + randomDifference));
 			case Uncommon:
-				return (10f + randomDifference) * globalStrength;
+				return (10f + randomDifference);
 			case Rare:
-				return (20f + randomDifference) * globalStrength;
+				return (20f + randomDifference);
 			case Epic:
-				return (40f + randomDifference) * globalStrength;
+				return (40f + randomDifference);
 			case Legendary:
-				return (70f + randomDifference) * globalStrength;
+				return (70f + randomDifference);
 			case Mythic:
-				return Math.min(100f, (100f + randomDifference) * globalStrength);
+				return Math.min(100f, (100f + randomDifference));
 		}
 	}
 
@@ -108,13 +107,6 @@ public interface IModifier {
 	 */
 	default List<Class<? extends Item>> getValidItemClasses() {
 		return null;
-	}
-
-	/**
-	 * The default strength value of this modifier.
-	 */
-	default int getDefaultValue() {
-		return 1;
 	}
 
 	/**

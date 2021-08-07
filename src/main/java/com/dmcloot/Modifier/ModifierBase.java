@@ -1,5 +1,6 @@
 package com.dmcloot.Modifier;
 
+import com.dmcloot.Configuration;
 import com.dmcloot.CuriosCompat;
 import com.dmcloot.DMCLoot;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -20,6 +21,7 @@ public abstract class ModifierBase implements IModifier {
 
 	private ForgeConfigSpec.ConfigValue<List<String>> ADDITIONS = null;
 	private ForgeConfigSpec.IntValue WEIGHT = null;
+	private ForgeConfigSpec.DoubleValue STRENGTH = null;
 
 	private final String name;
 	private final Affix affix;
@@ -43,6 +45,10 @@ public abstract class ModifierBase implements IModifier {
 		ADDITIONS = builder.define(this.getModifierName().split("\\.")[1], new ArrayList<>());
 	}
 
+	public void buildStrengthConfig(ForgeConfigSpec.Builder builder) {
+		STRENGTH = builder.defineInRange(this.getModifierName().split("\\.")[1], 1, 0, Double.MAX_VALUE);
+	}
+
 	public void buildWeightConfig(ForgeConfigSpec.Builder builder) {
 		WEIGHT = builder.defineInRange(this.getModifierName().split("\\.")[1], 5, 0, Integer.MAX_VALUE);
 	}
@@ -55,19 +61,24 @@ public abstract class ModifierBase implements IModifier {
 		return ADDITIONS.get();
 	}
 
+	public double getStrengthMultiplier() {
+		return STRENGTH.get();
+	}
+
 	/**
 	 * Applies this modifier and changes value depending on rarity.
 	 */
 	public void applyWithRarity(ItemStack stack, Rarity rarity) {
-		apply(stack, (int) (getDefaultValue() * getMultiplierFromRarity(rarity)));
+		float globalStrength = Configuration.GLOBAL_STRENGTH_MODIFIER.get().floatValue();
+		apply(stack, (int) (getMultiplierFromRarity(rarity) * globalStrength * getStrengthMultiplier()));
 	}
 
 	/**
-	 * Applies this modifier and NBT value to the given ItemStack. Object is integer by default.
+	 * Applies this modifier and NBT value to the given ItemStack.
 	 */
-	public void apply(ItemStack stack, Object value) {
+	public void apply(ItemStack stack, int value) {
 		if (canApply(stack)) {
-			stack.getOrCreateTag().putInt(getModifierName(), (Integer) value);
+			stack.getOrCreateTag().putInt(getModifierName(), value);
 		}
 	}
 

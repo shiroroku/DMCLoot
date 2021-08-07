@@ -48,19 +48,19 @@ public class FireModifier extends ModifierBase {
 		float randomDifference = ModifierRegistry.randomInstance.nextInt(1) - 2;
 		switch (rarity) {
 			default:
-				return 1f;
+				return 5f;
 			case Common:
-				return Math.max(2f, 2f + randomDifference);
+				return Math.max(10f, 10f + randomDifference);
 			case Uncommon:
-				return 3f + randomDifference;
+				return 15f + randomDifference;
 			case Rare:
-				return 4f + randomDifference;
+				return 20f + randomDifference;
 			case Epic:
-				return 6f + randomDifference;
+				return 30f + randomDifference;
 			case Legendary:
-				return 8f + randomDifference;
+				return 40f + randomDifference;
 			case Mythic:
-				return Math.min(12f, 10f + randomDifference);
+				return Math.min(60f, 50f + randomDifference);
 		}
 	}
 

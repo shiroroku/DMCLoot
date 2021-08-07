@@ -45,6 +45,12 @@ public class Configuration {
 		}
 		commonBuilder.pop();
 
+		commonBuilder.comment("Strength Multiplier of each modifier. (this is also multiplied by global_strength_modifier)").push("Strength Multipliers");
+		for (ModifierRegistry.MODIFIERS mod : ModifierRegistry.MODIFIERS.values()) {
+			mod.get().buildStrengthConfig(commonBuilder);
+		}
+		commonBuilder.pop();
+
 		commonBuilder.comment("Chance of the prefix being chose out of others.").push("Prefix Weights");
 		for (ModifierRegistry.MODIFIERS mod : ModifierRegistry.MODIFIERS.values()) {
 			if (mod.get().getModifierAffix() == IModifier.Affix.Prefix) {
