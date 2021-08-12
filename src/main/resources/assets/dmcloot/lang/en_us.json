@@ -1,5 +1,6 @@
 {
     "item.dmcloot.essence": "Essence",
+    "item.dmcloot.essence.desc": "Obtained from burning %s items in the Nether Fortress lava pool.",
     "attribute.name.dmcloot.frost": "seconds of Frost",
     "attribute.name.dmcloot.frost.damage": "Frost Damage",
     "modifier.name.dmcloot.frost": "Freezing",
