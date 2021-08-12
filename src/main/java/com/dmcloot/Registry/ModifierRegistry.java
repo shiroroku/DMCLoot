@@ -44,6 +44,32 @@ public class ModifierRegistry {
 
 	}
 
+	public static IModifier.Rarity getItemRarity(ItemStack item) {
+		IModifier.Rarity rarity = null;
+		if (item.hasTag() && item.getTag().contains("dmcloot.rarity") && item.getTag().getString("dmcloot.rarity") != null) {
+			for (IModifier.Rarity r : IModifier.Rarity.values()) {
+				if (r.toString().equals(item.getTag().getString("dmcloot.rarity"))) {
+					rarity = r;
+					break;
+				}
+			}
+			if (rarity == null) {
+				rarity = IModifier.Rarity.Common;
+				DMCLoot.LOGGER.error("(dmcloot.rarity): Rarity specified in itemstack NBT does not exist!");
+			}
+		}
+		return rarity;
+	}
+
+	public static boolean hasAnyModifier(ItemStack item) {
+		for (ModifierRegistry.MODIFIERS modifier : ModifierRegistry.MODIFIERS.values()) {
+			if (modifier.get().itemHasModifier(item)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static void applyRandomModifiersTo(ItemStack item, IModifier.Rarity rarity) {
 		TextComponent original = (TextComponent) item.getHoverName();
 

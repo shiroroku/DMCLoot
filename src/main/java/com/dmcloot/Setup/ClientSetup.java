@@ -4,6 +4,7 @@ import com.dmcloot.DMCLoot;
 import com.dmcloot.Item.EssenceItemColor;
 import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Registry.ItemRegistry;
+import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.Style;
@@ -34,18 +35,7 @@ public class ClientSetup {
 
 	public static void onItemTooltip(ItemTooltipEvent e) {
 		ItemStack item = e.getItemStack();
-		if (item.hasTag() && item.getTag().contains("dmcloot.rarity") && item.getTag().getString("dmcloot.rarity") != null) {
-			IModifier.Rarity rarity = null;
-			for (IModifier.Rarity r : IModifier.Rarity.values()) {
-				if (r.toString().equals(item.getTag().getString("dmcloot.rarity"))) {
-					rarity = r;
-					break;
-				}
-			}
-			if (rarity == null) {
-				rarity = IModifier.Rarity.Common;
-				DMCLoot.LOGGER.error("(onItemTooltip): (dmcloot.rarity): Rarity specified in itemstack NBT does not exist!");
-			}
+		if (ModifierRegistry.hasAnyModifier(item)) {
 
 			//Special, for modpack
 			if (e.getToolTip().size() >= 2) {
@@ -55,6 +45,7 @@ public class ClientSetup {
 			}
 			//====
 
+			IModifier.Rarity rarity = ModifierRegistry.getItemRarity(item);
 			e.getToolTip().add(1, new TranslationTextComponent("rarity.dmcloot." + rarity).setStyle(Style.EMPTY.withColor(Color.fromRgb(customDarker(new java.awt.Color(rarity.getColor().getColor())).getRGB()))));
 		}
 	}

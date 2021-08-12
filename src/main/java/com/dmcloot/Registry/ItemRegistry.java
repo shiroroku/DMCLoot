@@ -21,6 +21,23 @@ public class ItemRegistry {
 	public static RegistryObject<Item> ESSENCE_LEGENDARY = ITEMS.register("essence_" + IModifier.Rarity.Legendary, () -> new EssenceItem(IModifier.Rarity.Legendary, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 	public static RegistryObject<Item> ESSENCE_MYTHIC = ITEMS.register("essence_" + IModifier.Rarity.Mythic, () -> new EssenceItem(IModifier.Rarity.Mythic, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 
+	public static Item getEssenceFromRarity(IModifier.Rarity rarity) {
+		switch (rarity) {
+			default:
+				return ESSENCE_COMMON.get();
+			case Uncommon:
+				return ESSENCE_UNCOMMON.get();
+			case Rare:
+				return ESSENCE_RARE.get();
+			case Epic:
+				return ESSENCE_EPIC.get();
+			case Legendary:
+				return ESSENCE_LEGENDARY.get();
+			case Mythic:
+				return ESSENCE_MYTHIC.get();
+		}
+	}
+
 	public static void init() {
 		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}

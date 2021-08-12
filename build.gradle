@@ -2,14 +2,17 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
+        maven { url = 'https://repo.spongepowered.org/maven' }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
 version = '1.16.5-beta'
 group = 'com.dmcloot'
@@ -25,6 +28,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            arg "-mixin.config=dmcloot.mixins.json"
 
             mods {
                 dmcloot {
@@ -37,6 +41,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            arg "-mixin.config=dmcloot.mixins.json"
 
             mods {
                 dmcloot {
@@ -79,6 +84,7 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.32'
+    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 
     compileOnly fg.deobf("mezz.jei:jei-${version_jei}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${version_jei}")
@@ -96,9 +102,14 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "dmcloot.mixins.json"
         ])
     }
+}
+
+mixin {
+    add sourceSets.main, 'dmcloot.refmap.json'
 }
 
 jar.finalizedBy('reobfJar') 
