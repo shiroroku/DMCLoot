@@ -22,7 +22,6 @@ public class Events {
 		for (ModifierRegistry.MODIFIERS modifier : ModifierRegistry.MODIFIERS.values()) {
 			modifier.get().handleEventRegistry();
 		}
-
 	}
 
 	public static void sortItemAttributes(ItemAttributeModifierEvent e) {

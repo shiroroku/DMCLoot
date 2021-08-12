@@ -1,6 +1,5 @@
 package com.dmcloot;
 
-import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Modifier.ModifierBase;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.item.ItemStack;

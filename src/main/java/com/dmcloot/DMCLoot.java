@@ -1,6 +1,7 @@
 package com.dmcloot;
 
 import com.dmcloot.Registry.AttributeRegistry;
+import com.dmcloot.Registry.ItemRegistry;
 import com.dmcloot.Setup.ClientSetup;
 import com.dmcloot.Setup.CommonSetup;
 import com.dmcloot.Setup.ServerSetup;
@@ -18,6 +19,7 @@ public class DMCLoot {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	public DMCLoot() {
+		ItemRegistry.init();
 		Events.init();
 		AttributeRegistry.init();
 		RandomizerTagUpdater.init();
