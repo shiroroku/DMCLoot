@@ -1,10 +1,14 @@
 {
-	"required": true,
-	"minVersion": "0.8",
-	"package": "com.dmcloot.Mixin",
-	"compatibilityLevel": "JAVA_8",
-	"refmap": "dmcloot.refmap.json",
-	"mixins": [
-        "ItemEntityMixin"
-	]
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.dmcloot.Mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "dmcloot.refmap.json",
+  "mixins": [
+    "ItemEntityMixin"
+  ],
+  "client": [
+    "Client.ItemRendererMixin",
+    "Client.RenderTypeBuffersMixin"
+  ]
 }

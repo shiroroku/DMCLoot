@@ -1,6 +1,6 @@
 package com.dmcloot.Registry;
 
-import com.dmcloot.Configuration;
+import com.dmcloot.CommonConfiguration;
 import com.dmcloot.DMCLoot;
 import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Modifier.ModifierBase;
@@ -12,6 +12,8 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class ModifierRegistry {
@@ -45,17 +47,13 @@ public class ModifierRegistry {
 	}
 
 	public static IModifier.Rarity getItemRarity(ItemStack item) {
-		IModifier.Rarity rarity = null;
+		IModifier.Rarity rarity = IModifier.Rarity.Common;
 		if (item.hasTag() && item.getTag().contains("dmcloot.rarity") && item.getTag().getString("dmcloot.rarity") != null) {
 			for (IModifier.Rarity r : IModifier.Rarity.values()) {
 				if (r.toString().equals(item.getTag().getString("dmcloot.rarity"))) {
 					rarity = r;
 					break;
 				}
-			}
-			if (rarity == null) {
-				rarity = IModifier.Rarity.Common;
-				DMCLoot.LOGGER.error("(dmcloot.rarity): Rarity specified in itemstack NBT does not exist!");
 			}
 		}
 		return rarity;
@@ -68,6 +66,16 @@ public class ModifierRegistry {
 			}
 		}
 		return false;
+	}
+
+	public static List<ModifierRegistry.MODIFIERS> getAllModifiers(ItemStack item) {
+		List<ModifierRegistry.MODIFIERS> mods = new ArrayList<>();
+		for (ModifierRegistry.MODIFIERS modifier : ModifierRegistry.MODIFIERS.values()) {
+			if (modifier.get().itemHasModifier(item)) {
+				mods.add(modifier);
+			}
+		}
+		return mods;
 	}
 
 	public static void applyRandomModifiersTo(ItemStack item, IModifier.Rarity rarity) {
@@ -110,7 +118,7 @@ public class ModifierRegistry {
 	 * Gets a random weighted modifier of the type from the registry. Returns null if no modifier.
 	 */
 	public static ModifierBase getRandomModifierFor(IModifier.Affix type, ItemStack stack) {
-		if (Configuration.EMPTY_AFFIX_CHANCE.get() != 0.0D && (Configuration.EMPTY_AFFIX_CHANCE.get() == 1.0D || randomInstance.nextDouble() <= Configuration.EMPTY_AFFIX_CHANCE.get())) {
+		if (CommonConfiguration.EMPTY_AFFIX_CHANCE.get() != 0.0D && (CommonConfiguration.EMPTY_AFFIX_CHANCE.get() == 1.0D || randomInstance.nextDouble() <= CommonConfiguration.EMPTY_AFFIX_CHANCE.get())) {
 			return null;
 		}
 

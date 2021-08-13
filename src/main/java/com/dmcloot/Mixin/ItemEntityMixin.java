@@ -60,7 +60,6 @@ public class ItemEntityMixin {
 			for (int z = -1; z <= 1; z++) {
 				BlockPos pos = new BlockPos(lavaSourcePos.getX() + x, lavaSourcePos.getY(), lavaSourcePos.getZ() + z);
 				Block current = level.getBlockState(pos).getBlock();
-				DMCLoot.LOGGER.info(current.getRegistryName() + " : " + pos);
 				if (current != Blocks.NETHER_BRICKS) {
 					if (!pos.equals(lavaSourcePos)) {
 						return false;

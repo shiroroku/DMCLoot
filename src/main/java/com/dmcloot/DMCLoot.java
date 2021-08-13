@@ -24,7 +24,8 @@ public class DMCLoot {
 		AttributeRegistry.init();
 		RandomizerTagUpdater.init();
 
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.COMMONCONFIG);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.COMMONCONFIG);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfiguration.CLIENTCONFIG);
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(CommonSetup::init);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);

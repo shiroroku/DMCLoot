@@ -6,13 +6,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class Configuration {
+public class CommonConfiguration {
 
 	public static ForgeConfigSpec COMMONCONFIG;
 
 	public static ForgeConfigSpec.BooleanValue MODIFY_ALL;
 	public static ForgeConfigSpec.DoubleValue GLOBAL_STRENGTH_MODIFIER;
 	public static ForgeConfigSpec.DoubleValue EMPTY_AFFIX_CHANCE;
+	public static ForgeConfigSpec.BooleanValue GLINT_EFFECT;
 
 	public static ForgeConfigSpec.IntValue COMMON_WEIGHT;
 	public static ForgeConfigSpec.IntValue UNCOMMON_WEIGHT;
@@ -28,6 +29,7 @@ public class Configuration {
 		MODIFY_ALL = commonBuilder.comment("If all applicable items should recive random modifiers. Else they must be randomized through nbt.").define("modify_all", true);
 		GLOBAL_STRENGTH_MODIFIER = commonBuilder.comment("Changes the base strength of \"most\" modifiers, default 0.2D (20%)").defineInRange("global_strength_modifier", 0.2D, 0.0D, Double.MAX_VALUE);
 		EMPTY_AFFIX_CHANCE = commonBuilder.comment("Chance of the item not having a prefix or suffix (seperate)").defineInRange("empty_affix_chance", 0.2D, 0.0D, 1.0D);
+		GLINT_EFFECT = commonBuilder.comment("If Glint effects on fire/frost/etc items should show.").define("glint_effect", true);
 		commonBuilder.pop();
 
 		commonBuilder.comment("Chance of a rarity being chosen out of the others.").push("Rarity Weights");

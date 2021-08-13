@@ -1,6 +1,6 @@
 package com.dmcloot.Modifier;
 
-import com.dmcloot.Configuration;
+import com.dmcloot.CommonConfiguration;
 import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -19,12 +19,12 @@ public interface IModifier {
 	}
 
 	enum Rarity {
-		Common(TextFormatting.WHITE, "common", Configuration.COMMON_WEIGHT.get()),
-		Uncommon(TextFormatting.GREEN, "uncommon", Configuration.UNCOMMON_WEIGHT.get()),
-		Rare(TextFormatting.BLUE, "rare", Configuration.RARE_WEIGHT.get()),
-		Epic(TextFormatting.DARK_PURPLE, "epic", Configuration.EPIC_WEIGHT.get()),
-		Legendary(TextFormatting.GOLD, "legendary", Configuration.LEGENDARY_WEIGHT.get()),
-		Mythic(TextFormatting.RED, "mythic", Configuration.MYTHIC_WEIGHT.get());
+		Common(TextFormatting.WHITE, "common", CommonConfiguration.COMMON_WEIGHT.get()),
+		Uncommon(TextFormatting.GREEN, "uncommon", CommonConfiguration.UNCOMMON_WEIGHT.get()),
+		Rare(TextFormatting.BLUE, "rare", CommonConfiguration.RARE_WEIGHT.get()),
+		Epic(TextFormatting.DARK_PURPLE, "epic", CommonConfiguration.EPIC_WEIGHT.get()),
+		Legendary(TextFormatting.GOLD, "legendary", CommonConfiguration.LEGENDARY_WEIGHT.get()),
+		Mythic(TextFormatting.RED, "mythic", CommonConfiguration.MYTHIC_WEIGHT.get());
 
 		private final TextFormatting color;
 		private final String name;

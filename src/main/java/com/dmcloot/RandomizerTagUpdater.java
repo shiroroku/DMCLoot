@@ -60,7 +60,7 @@ public class RandomizerTagUpdater {
 	public static void handleRandomizeTag(ItemStack stack) {
 		if (stack.hasTag() || CuriosCompat.isCurio(stack)) {
 			CompoundNBT itemtag = stack.getOrCreateTag();
-			if (Configuration.MODIFY_ALL.get()) {
+			if (CommonConfiguration.MODIFY_ALL.get()) {
 				if (!itemtag.contains("rpgloot.randomize")) {
 					itemtag.putBoolean("rpgloot.randomize", true);
 				}
