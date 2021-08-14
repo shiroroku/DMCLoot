@@ -10,9 +10,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
-import net.minecraft.entity.monster.SilverfishEntity;
-import net.minecraft.entity.monster.StrayEntity;
-import net.minecraft.entity.passive.SnowGolemEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.SoundCategory;
@@ -23,22 +22,22 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class FireModifier extends ModifierBase {
+public class LightningModifier extends ModifierBase {
 
-	private static final String modifierName = "dmcloot.fire";
-	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048.0D));
-	private static final RegistryObject<Attribute> ATTRIBUTE2 = AttributeRegistry.ATTRIBUTES.register(modifierName + ".damage", () -> new RangedAttribute("attribute.name." + modifierName + ".damage", 0.0D, 0.0D, 2048.0D));
+	private static final String modifierName = "dmcloot.lightning";
+	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName + ".damage", () -> new RangedAttribute("attribute.name." + modifierName + ".damage", 0.0D, 0.0D, 2048.0D));
 
-	public FireModifier() {
+	public LightningModifier() {
 		super(modifierName, Affix.Prefix);
 	}
 
 	@Override
 	public List<Attribute> getAttribute() {
-		return Arrays.asList(ATTRIBUTE.get(), ATTRIBUTE2.get());
+		return Collections.singletonList(ATTRIBUTE.get());
 	}
 
 	@Override
@@ -75,20 +74,16 @@ public class FireModifier extends ModifierBase {
 
 	@Override
 	public void handleEventRegistry() {
-		MinecraftForge.EVENT_BUS.addListener(FireModifier::onDamageLiving);
+		MinecraftForge.EVENT_BUS.addListener(LightningModifier::onDamageLiving);
 	}
 
 	@Override
 	public int getValue(ItemStack item, Attribute a) {
-		if (a == ATTRIBUTE2.get()) {
-			return getValue(item) / 2;
-		} else {
-			return getValue(item);
-		}
+		return getValue(item) / 2;
 	}
 
 	private static void onDamageLiving(LivingDamageEvent e) {
-		IModifier mod = ModifierRegistry.MODIFIERS.FIRE.get();
+		IModifier mod = ModifierRegistry.MODIFIERS.LIGHTNING.get();
 		if (e.getSource().getEntity() == null) {
 			return;
 		}
@@ -97,10 +92,9 @@ public class FireModifier extends ModifierBase {
 			ItemStack weapon = player.getMainHandItem();
 			if (mod.itemHasModifier(weapon)) {
 				LivingEntity target = e.getEntityLiving();
-				target.setSecondsOnFire(Math.round(mod.getValue(weapon) * 20f));
-				if (!target.isInWaterOrRain() && !target.fireImmune() || target instanceof StrayEntity || target instanceof SilverfishEntity || target instanceof SnowGolemEntity || target.getClassification(false) == EntityClassification.CREATURE) {
-					e.setAmount(e.getAmount() + (float) mod.getValue(weapon, ATTRIBUTE2.get()));
-					player.level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.FIRECHARGE_USE, SoundCategory.PLAYERS, 0.6f, (float) (1f + player.level.random.nextDouble()));
+				if (target instanceof IronGolemEntity || target instanceof EnderDragonEntity || (target.isInWaterOrRain() && target.getClassification(false) != EntityClassification.WATER_CREATURE) || target.getArmorCoverPercentage() > 0.0f) {
+					e.setAmount(e.getAmount() + (float) mod.getValue(weapon));
+					player.level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundCategory.PLAYERS, 0.70f, (float) (8f - player.level.random.nextDouble() * 5f));
 				}
 			}
 		}

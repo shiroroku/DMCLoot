@@ -8,6 +8,8 @@ import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -50,6 +52,7 @@ public class LifestealModifier extends ModifierBase {
 			ItemStack weapon = player.getMainHandItem();
 			if (modifier.itemHasModifier(weapon)) {
 				player.heal((modifier.getValue(weapon) / 100f) * e.getAmount());
+				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.WITCH_DRINK, SoundCategory.PLAYERS, 0.5f, 1f);
 			}
 		}
 	}

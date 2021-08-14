@@ -7,6 +7,8 @@
     "attribute.name.dmcloot.fire": "Seconds of Fire",
     "attribute.name.dmcloot.fire.damage": "Fire Damage",
     "modifier.name.dmcloot.fire": "Flaming",
+    "attribute.name.dmcloot.lightning.damage": "Lightning Damage",
+    "modifier.name.dmcloot.lightning": "Lightning",
     "attribute.name.dmcloot.lifesteal": "Lifesteal",
     "modifier.name.dmcloot.lifesteal": "Sapping",
     "attribute.name.dmcloot.learning": "More XP on Kill",

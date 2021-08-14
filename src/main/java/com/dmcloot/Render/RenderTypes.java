@@ -17,6 +17,7 @@ public class RenderTypes extends RenderType {
 	enum RENDERTYPES {
 		FIRE(ModifierRegistry.MODIFIERS.FIRE.get()),
 		FROST(ModifierRegistry.MODIFIERS.FROST.get()),
+		LIGHTNING(ModifierRegistry.MODIFIERS.LIGHTNING.get()),
 		LIFESTEAL(ModifierRegistry.MODIFIERS.LIFESTEAL.get());
 
 		private final RenderType rendertype;
@@ -58,7 +59,6 @@ public class RenderTypes extends RenderType {
 		}
 		return null;
 	}
-
 
 	private static RenderType createCustomGlint(String Id, ResourceLocation rl) {
 		State state = State.builder().setTextureState(new TextureState(rl, true, false)).setWriteMaskState(COLOR_WRITE).setCullState(NO_CULL).setDepthTestState(EQUAL_DEPTH_TEST).setTransparencyState(GLINT_TRANSPARENCY).setTexturingState(RenderState.GLINT_TEXTURING).createCompositeState(false);
