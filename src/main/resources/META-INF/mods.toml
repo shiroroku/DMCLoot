@@ -4,12 +4,13 @@ modLoader = "javafml"
 [[mods]]
 displayName = "DMCLoot"
 modId = "dmcloot"
-version = "${file.jarVersion}"
-#logoFile="dmcloot.png"
-authors = "Amo, shiroroku(elise)"
-credits = ""
+version = "1.16.5"
+logoFile="icon.png"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/dmcloot"
+authors = "shiroroku(elise)"
+credits = "amo"
 description = '''
-beepboop description beep
+Adds various RPG-like affixes to tools, weapons, and armor!
 '''
 [[dependencies.dmcloot]]
 mandatory = true
