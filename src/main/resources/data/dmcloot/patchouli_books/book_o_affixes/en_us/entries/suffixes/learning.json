@@ -1,0 +1,11 @@
+{
+    "name": "Learning",
+    "icon": "minecraft:book",
+    "category": "dmcloot:suffixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Gain a percentage more experience of the killed mob. Applicable to swords, axes, bows, and crossbows."
+        }
+    ]
+}

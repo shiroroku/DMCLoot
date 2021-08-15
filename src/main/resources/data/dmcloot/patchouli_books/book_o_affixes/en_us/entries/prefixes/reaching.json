@@ -1,0 +1,11 @@
+{
+    "name": "Reaching",
+    "icon": "minecraft:book",
+    "category": "dmcloot:prefixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Adds further reach distance, stacks. Applicable to tools and armor."
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Frost",
+    "icon": "minecraft:book",
+    "category": "dmcloot:prefixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Does Frost damage and slows the target. Applicable to swords, axes, bows and crossbows.$(br2)Frost damage does extra damage to fire immune mobs, water creatures, Drowned, when in the nether, and mobs in water/rain. Extinguishes blazes and shortly stuns them."
+        }
+    ]
+}

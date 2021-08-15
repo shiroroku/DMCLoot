@@ -1,0 +1,11 @@
+{
+    "name": "Lightning",
+    "icon": "minecraft:book",
+    "category": "dmcloot:prefixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Does Lightning damage. Applicable to swords, axes, bows and crossbows.$(br2)Lightning damage deals extra damage to mobs wearing armor, Iron Golems, Ender Dragon, and mobs in water/rain that're not water creatures."
+        }
+    ]
+}

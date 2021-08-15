@@ -1,0 +1,41 @@
+{
+    "name": "Obtaining Essence",
+    "icon": "minecraft:netherrack",
+    "category": "dmcloot:essence",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Essence can be obtained by throwing item's with rarity into a Nether Brick Lavapool in the Nether.$(br2)These are usually found in the Nether Fortress, but it is possible to create your own."
+        },
+        {
+            "type": "multiblock",
+            "name": "Nether Brick Lavapool",
+            "multiblock": {
+                "pattern": [
+                    [
+                        "AAA",
+                        "ABA",
+                        "AAA"
+                    ],
+                    [
+                        "   ",
+                        " 0 ",
+                        "   "
+                    ]
+                ],
+                "offset": [
+                    0,
+                    1,
+                    0
+                ],
+                "mapping": {
+                    "A": "minecraft:nether_bricks",
+                    "B": "minecraft:lava"
+                },
+                "symmetrical": true
+            },
+            "text": "A lava source block surrounded by 8 Nether Bricks."
+        }
+    ]
+}

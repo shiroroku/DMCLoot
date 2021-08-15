@@ -1,0 +1,11 @@
+{
+    "name": "Lifesteal (Sapping)",
+    "icon": "minecraft:book",
+    "category": "dmcloot:prefixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Heals the wielder a percentage of the damage dealt. Applicable to swords, axes, bows and crossbows."
+        }
+    ]
+}

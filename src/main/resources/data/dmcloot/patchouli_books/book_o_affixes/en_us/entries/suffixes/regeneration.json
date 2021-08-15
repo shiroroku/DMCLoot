@@ -1,0 +1,11 @@
+{
+    "name": "Regeneration",
+    "icon": "minecraft:book",
+    "category": "dmcloot:suffixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Adds a percentage of the player max health healed every tick (player max health * % * 0.005), stacks. Applicable to shields and armor."
+        }
+    ]
+}

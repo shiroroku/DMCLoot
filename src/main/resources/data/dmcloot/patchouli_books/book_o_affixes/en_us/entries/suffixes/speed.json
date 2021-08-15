@@ -1,0 +1,11 @@
+{
+    "name": "Speed",
+    "icon": "minecraft:book",
+    "category": "dmcloot:suffixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Increases mining speed by a percentage. Applicable to pickaxes, axes, and shovels."
+        }
+    ]
+}

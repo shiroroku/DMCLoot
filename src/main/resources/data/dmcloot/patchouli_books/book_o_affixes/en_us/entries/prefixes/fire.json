@@ -1,0 +1,11 @@
+{
+    "name": "Flaming",
+    "icon": "minecraft:book",
+    "category": "dmcloot:prefixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Does Fire damage and lights the target on fire. Applicable to swords, axes, bows and crossbows.$(br2)Fire damage does extra damage to non fire immune mobs, Strays, Silverfish, Snow Golems, and basic creatures."
+        }
+    ]
+}

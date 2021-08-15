@@ -1,0 +1,29 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "patchouli"
+        }
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:book"
+        },
+        {
+            "item": "minecraft:feather"
+        },
+        {
+            "item": "minecraft:black_dye"
+        },
+        {
+            "item": "minecraft:wooden_sword"
+        }
+    ],
+    "result": {
+        "item": "patchouli:guide_book",
+        "nbt": {
+            "patchouli:book": "dmcloot:book_o_affixes"
+        }
+    }
+}

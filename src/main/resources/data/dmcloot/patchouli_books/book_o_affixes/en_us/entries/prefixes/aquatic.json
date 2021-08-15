@@ -1,0 +1,11 @@
+{
+    "name": "Aquatic",
+    "icon": "minecraft:book",
+    "category": "dmcloot:prefixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Increases swim speed, stacks. Applicable to armor."
+        }
+    ]
+}

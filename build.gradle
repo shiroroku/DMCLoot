@@ -28,7 +28,10 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
             arg "-mixin.config=dmcloot.mixins.json"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 dmcloot {
@@ -41,6 +44,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
             arg "-mixin.config=dmcloot.mixins.json"
 
             mods {
@@ -80,6 +84,9 @@ repositories {
     maven {
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        url 'https://maven.blamejared.com'
+    }
 }
 
 dependencies {
@@ -89,8 +96,11 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${version_jei}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${version_jei}")
 
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}")
+
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
 }
 
 jar {

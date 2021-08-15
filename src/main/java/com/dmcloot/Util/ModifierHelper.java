@@ -66,9 +66,11 @@ public class ModifierHelper {
 	/**
 	 * Gets a random weighted modifier of the type from the registry. Returns null if no modifier.
 	 */
-	public static ModifierBase getRandomModifierFor(IModifier.Affix type, ItemStack stack) {
-		if (CommonConfiguration.EMPTY_AFFIX_CHANCE.get() != 0.0D && (CommonConfiguration.EMPTY_AFFIX_CHANCE.get() == 1.0D || DMCLoot.randomInstance.nextDouble() <= CommonConfiguration.EMPTY_AFFIX_CHANCE.get())) {
-			return null;
+	public static ModifierBase getRandomModifierFor(IModifier.Affix type, ItemStack stack, boolean useEmpty) {
+		if (useEmpty) {
+			if (CommonConfiguration.EMPTY_AFFIX_CHANCE.get() != 0.0D && (CommonConfiguration.EMPTY_AFFIX_CHANCE.get() == 1.0D || DMCLoot.randomInstance.nextDouble() <= CommonConfiguration.EMPTY_AFFIX_CHANCE.get())) {
+				return null;
+			}
 		}
 
 		int total = 0;
@@ -104,8 +106,8 @@ public class ModifierHelper {
 		TextComponent originalName = (TextComponent) item.getHoverName();
 		IFormattableTextComponent newName = null;
 
-		ModifierBase prefix = getRandomModifierFor(IModifier.Affix.Prefix, item);
-		ModifierBase suffix = getRandomModifierFor(IModifier.Affix.Suffix, item);
+		ModifierBase prefix = getRandomModifierFor(IModifier.Affix.Prefix, item, true);
+		ModifierBase suffix = getRandomModifierFor(IModifier.Affix.Suffix, item, true);
 
 		//If there's no possible modifiers for this item, return.
 		if (prefix == null && suffix == null) {

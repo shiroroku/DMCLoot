@@ -1,0 +1,11 @@
+{
+    "name": "Critical",
+    "icon": "minecraft:book",
+    "category": "dmcloot:prefixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Adds a chance to critical attack (the jump attack critical). Applicable to swords and axes."
+        }
+    ]
+}

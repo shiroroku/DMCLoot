@@ -1,0 +1,11 @@
+{
+    "replace": false,
+    "values": [
+        "dmcloot:essence_common",
+        "dmcloot:essence_uncommon",
+        "dmcloot:essence_rare",
+        "dmcloot:essence_epic",
+        "dmcloot:essence_legendary",
+        "dmcloot:essence_mythic"
+    ]
+}

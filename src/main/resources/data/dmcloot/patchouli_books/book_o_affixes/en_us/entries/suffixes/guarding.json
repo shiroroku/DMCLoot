@@ -1,0 +1,11 @@
+{
+    "name": "Guarding",
+    "icon": "minecraft:book",
+    "category": "dmcloot:suffixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Adds a percentage more armor based on current armor, stacks. Note: not wearing armor is 0 so 50% more is still 0. Applicable to tools and shields."
+        }
+    ]
+}

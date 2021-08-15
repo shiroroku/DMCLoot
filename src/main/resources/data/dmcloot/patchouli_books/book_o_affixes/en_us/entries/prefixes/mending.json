@@ -1,0 +1,11 @@
+{
+    "name": "Mending",
+    "icon": "minecraft:book",
+    "category": "dmcloot:prefixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Adds a chance to repair one durability when being used (swords/tools) or being attacked (armor). Applicable to tools and armor."
+        }
+    ]
+}
