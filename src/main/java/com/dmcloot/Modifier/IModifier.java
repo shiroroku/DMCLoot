@@ -1,12 +1,10 @@
 package com.dmcloot.Modifier;
 
-import com.dmcloot.CommonConfiguration;
-import com.dmcloot.Registry.ModifierRegistry;
+import com.dmcloot.DMCLoot;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.List;
@@ -16,37 +14,6 @@ public interface IModifier {
 	enum Affix {
 		Prefix,
 		Suffix
-	}
-
-	enum Rarity {
-		Common(TextFormatting.WHITE, "common", CommonConfiguration.COMMON_WEIGHT.get()),
-		Uncommon(TextFormatting.GREEN, "uncommon", CommonConfiguration.UNCOMMON_WEIGHT.get()),
-		Rare(TextFormatting.BLUE, "rare", CommonConfiguration.RARE_WEIGHT.get()),
-		Epic(TextFormatting.DARK_PURPLE, "epic", CommonConfiguration.EPIC_WEIGHT.get()),
-		Legendary(TextFormatting.GOLD, "legendary", CommonConfiguration.LEGENDARY_WEIGHT.get()),
-		Mythic(TextFormatting.RED, "mythic", CommonConfiguration.MYTHIC_WEIGHT.get());
-
-		private final TextFormatting color;
-		private final String name;
-		private final int weight;
-
-		Rarity(TextFormatting color, String name, int weight) {
-			this.color = color;
-			this.name = name;
-			this.weight = weight;
-		}
-
-		public int getWeight() {
-			return this.weight;
-		}
-
-		public TextFormatting getColor() {
-			return this.color;
-		}
-
-		public String toString() {
-			return this.name;
-		}
 	}
 
 	/**
@@ -65,22 +32,22 @@ public interface IModifier {
 	 * Returns the multiplier for each rarity. Default is 1 - 100 for percentages.
 	 * Can be used as values for each rarity if getDefaultValue is 1.
 	 */
-	default float getMultiplierFromRarity(Rarity rarity) {
-		float randomDifference = ModifierRegistry.randomInstance.nextInt(6) - 5;
+	default float getMultiplierFromRarity(ModifierRarity rarity) {
+		float randomDifference = DMCLoot.randomInstance.nextInt(6) - 5;
 		switch (rarity) {
 			default:
 				return 1f;
-			case Common:
+			case COMMON:
 				return Math.max(5f, (5f + randomDifference));
-			case Uncommon:
+			case UNCOMMON:
 				return (10f + randomDifference);
-			case Rare:
+			case RARE:
 				return (20f + randomDifference);
-			case Epic:
+			case EPIC:
 				return (40f + randomDifference);
-			case Legendary:
+			case LEGENDARY:
 				return (70f + randomDifference);
-			case Mythic:
+			case MYTHIC:
 				return Math.min(100f, (100f + randomDifference));
 		}
 	}

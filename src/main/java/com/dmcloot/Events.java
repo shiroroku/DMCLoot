@@ -1,6 +1,7 @@
 package com.dmcloot;
 
 import com.dmcloot.Registry.ModifierRegistry;
+import com.dmcloot.Util.ModifierHelper;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -29,7 +30,7 @@ public class Events {
 			return;
 		}
 
-		if (ModifierRegistry.hasAnyModifier(e.getItemStack())) {
+		if (ModifierHelper.hasAnyModifier(e.getItemStack())) {
 			Multimap<Attribute, AttributeModifier> unmodifiableModifiers = TreeMultimap.create(Comparator.comparing(ForgeRegistryEntry::getRegistryName), (value1, value2) -> {
 				int nameCompare = Integer.compare(value1.getOperation().ordinal(), value2.getOperation().ordinal());
 				int valueCompare = Double.compare(value2.getAmount(), value1.getAmount());

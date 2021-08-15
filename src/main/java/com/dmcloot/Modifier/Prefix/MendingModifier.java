@@ -72,6 +72,7 @@ public class MendingModifier extends ModifierBase {
 	/**
 	 * When the player uses a hoe.
 	 */
+	@SuppressWarnings("deprecation")
 	private static void onUseHoeEvent(UseHoeEvent e) {
 		IModifier modifier = ModifierRegistry.MODIFIERS.MENDING.get();
 		processModifier(modifier, e.getPlayer().getRandom(), e.getPlayer().getMainHandItem());

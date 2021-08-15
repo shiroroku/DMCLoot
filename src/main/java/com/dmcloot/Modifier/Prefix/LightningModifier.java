@@ -3,6 +3,7 @@ package com.dmcloot.Modifier.Prefix;
 import com.dmcloot.DMCLoot;
 import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Modifier.ModifierBase;
+import com.dmcloot.Modifier.ModifierRarity;
 import com.dmcloot.Registry.AttributeRegistry;
 import com.dmcloot.Registry.ModifierRegistry;
 import net.minecraft.entity.EntityClassification;
@@ -46,22 +47,22 @@ public class LightningModifier extends ModifierBase {
 	}
 
 	@Override
-	public float getMultiplierFromRarity(Rarity rarity) {
-		float randomDifference = ModifierRegistry.randomInstance.nextInt(1) - 2;
+	public float getMultiplierFromRarity(ModifierRarity rarity) {
+		float randomDifference = DMCLoot.randomInstance.nextInt(1) - 2;
 		switch (rarity) {
 			default:
 				return 5f;
-			case Common:
+			case COMMON:
 				return Math.max(10f, 10f + randomDifference);
-			case Uncommon:
+			case UNCOMMON:
 				return 15f + randomDifference;
-			case Rare:
+			case RARE:
 				return 20f + randomDifference;
-			case Epic:
+			case EPIC:
 				return 30f + randomDifference;
-			case Legendary:
+			case LEGENDARY:
 				return 40f + randomDifference;
-			case Mythic:
+			case MYTHIC:
 				return Math.min(60f, 50f + randomDifference);
 		}
 	}

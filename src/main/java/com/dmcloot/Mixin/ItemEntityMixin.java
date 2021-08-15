@@ -1,9 +1,8 @@
 package com.dmcloot.Mixin;
 
-import com.dmcloot.DMCLoot;
 import com.dmcloot.Item.EssenceItem;
 import com.dmcloot.Registry.ItemRegistry;
-import com.dmcloot.Registry.ModifierRegistry;
+import com.dmcloot.Util.ModifierHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
@@ -32,7 +31,7 @@ public class ItemEntityMixin {
 		}
 
 		//Make sure we are in the nether, and dealing with a dmcloot item
-		if (!item.level.dimensionType().piglinSafe() || !ModifierRegistry.hasAnyModifier(item.getItem())) {
+		if (!item.level.dimensionType().piglinSafe() || !ModifierHelper.hasAnyModifier(item.getItem())) {
 			return;
 		}
 
@@ -45,7 +44,7 @@ public class ItemEntityMixin {
 					item.level.addParticle(ParticleTypes.LARGE_SMOKE, item.getX() + item.level.random.nextDouble() - 0.5f, item.getY(), item.getZ() + item.level.random.nextDouble() - 0.5f, 0, 0.1D, 0);
 				}
 			} else {
-				ItemStack essence = new ItemStack(ItemRegistry.getEssenceFromRarity(ModifierRegistry.getItemRarity(item.getItem())));
+				ItemStack essence = new ItemStack(ItemRegistry.getEssenceFromRarity(ModifierHelper.getItemRarity(item.getItem())));
 				item.level.addFreshEntity(new ItemEntity(item.level, item.getX(), item.getY(), item.getZ(), essence));
 				item.remove();
 			}

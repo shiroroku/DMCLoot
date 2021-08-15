@@ -1,10 +1,9 @@
-package com.dmcloot.Setup;
+package com.dmcloot;
 
-import com.dmcloot.DMCLoot;
 import com.dmcloot.Item.EssenceItemColor;
-import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.Modifier.ModifierRarity;
 import com.dmcloot.Registry.ItemRegistry;
-import com.dmcloot.Registry.ModifierRegistry;
+import com.dmcloot.Util.ModifierHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.Style;
@@ -19,10 +18,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = DMCLoot.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientSetup {
 
+	@SuppressWarnings("unused")
 	public static void init(final FMLClientSetupEvent event) {
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, ClientSetup::onItemTooltip);
 	}
@@ -35,7 +34,7 @@ public class ClientSetup {
 
 	public static void onItemTooltip(ItemTooltipEvent e) {
 		ItemStack item = e.getItemStack();
-		if (ModifierRegistry.hasAnyModifier(item)) {
+		if (ModifierHelper.hasAnyModifier(item)) {
 
 			//Special, for modpack
 			if (e.getToolTip().size() >= 2) {
@@ -45,7 +44,7 @@ public class ClientSetup {
 			}
 			//====
 
-			IModifier.Rarity rarity = ModifierRegistry.getItemRarity(item);
+			ModifierRarity rarity = ModifierHelper.getItemRarity(item);
 			e.getToolTip().add(1, new TranslationTextComponent("rarity.dmcloot." + rarity).setStyle(Style.EMPTY.withColor(Color.fromRgb(customDarker(new java.awt.Color(rarity.getColor().getColor())).getRGB()))));
 		}
 	}

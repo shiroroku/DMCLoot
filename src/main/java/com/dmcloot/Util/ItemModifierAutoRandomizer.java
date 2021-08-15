@@ -1,7 +1,9 @@
-package com.dmcloot;
+package com.dmcloot.Util;
 
-import com.dmcloot.Modifier.IModifier;
-import com.dmcloot.Registry.ModifierRegistry;
+import com.dmcloot.Configuration.CommonConfiguration;
+import com.dmcloot.Compat.CuriosCompat;
+import com.dmcloot.DMCLoot;
+import com.dmcloot.Modifier.ModifierRarity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -11,7 +13,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
-public class RandomizerTagUpdater {
+public class ItemModifierAutoRandomizer {
 
 	/**
 	 * NBT TAGS:
@@ -21,17 +23,17 @@ public class RandomizerTagUpdater {
 	 */
 
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemCrafted);
-		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onItemToss);
-		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onLivingDrops);
-		MinecraftForge.EVENT_BUS.addListener(RandomizerTagUpdater::onContainerOpen);
+		MinecraftForge.EVENT_BUS.addListener(ItemModifierAutoRandomizer::onItemCrafted);
+		MinecraftForge.EVENT_BUS.addListener(ItemModifierAutoRandomizer::onItemToss);
+		MinecraftForge.EVENT_BUS.addListener(ItemModifierAutoRandomizer::onLivingDrops);
+		MinecraftForge.EVENT_BUS.addListener(ItemModifierAutoRandomizer::onContainerOpen);
 
 	}
 
 	private static void onContainerOpen(PlayerContainerEvent.Open e) {
 		if (!e.getEntity().level.isClientSide()) {
 			for (ItemStack stack : e.getContainer().getItems()) {
-				handleRandomizeTag(stack);
+				processRandomize(stack);
 			}
 		}
 
@@ -40,26 +42,29 @@ public class RandomizerTagUpdater {
 	private static void onLivingDrops(LivingDropsEvent e) {
 		if (!e.getEntity().level.isClientSide()) {
 			for (ItemEntity itementity : e.getDrops()) {
-				handleRandomizeTag(itementity.getItem());
+				processRandomize(itementity.getItem());
 			}
 		}
 	}
 
 	private static void onItemCrafted(PlayerEvent.ItemCraftedEvent e) {
 		if (!e.getEntity().level.isClientSide()) {
-			handleRandomizeTag(e.getCrafting());
+			processRandomize(e.getCrafting());
 		}
 	}
 
 	private static void onItemToss(ItemTossEvent e) {
 		if (!e.getPlayer().level.isClientSide()) {
-			handleRandomizeTag(e.getEntityItem().getItem());
+			processRandomize(e.getEntityItem().getItem());
 		}
 	}
 
-	public static void handleRandomizeTag(ItemStack stack) {
+	private static void processRandomize(ItemStack stack) {
+		//This only randomizes items with tags or curios (curios WIP)
 		if (stack.hasTag() || CuriosCompat.isCurio(stack)) {
 			CompoundNBT itemtag = stack.getOrCreateTag();
+
+			//If we want to modify all possible items, tick randomize to true on items that dont have this tag.
 			if (CommonConfiguration.MODIFY_ALL.get()) {
 				if (!itemtag.contains("rpgloot.randomize")) {
 					itemtag.putBoolean("rpgloot.randomize", true);
@@ -67,19 +72,24 @@ public class RandomizerTagUpdater {
 			}
 
 			if (itemtag.getBoolean("rpgloot.randomize")) {
-				IModifier.Rarity rarity = null;
+				ModifierRarity rarity = null;
+
+				//Check if the item has a rarity tag, and assign the rarity from that.
+				//If it doesnt, then we check if it has rarity weights tag, and assign the rarity from that.
 				if (itemtag.contains("rpgloot.rarity")) {
 					String tagRarity = itemtag.getString("rpgloot.rarity");
-					for (IModifier.Rarity r : IModifier.Rarity.values()) {
+					for (ModifierRarity r : ModifierRarity.values()) {
 						if (r.toString().equals(tagRarity)) {
 							rarity = r;
 							break;
 						}
 					}
 					if (rarity == null) {
-						rarity = IModifier.Rarity.Common;
+						rarity = ModifierRarity.COMMON;
 						DMCLoot.LOGGER.error("(rpgloot.randomize): (rpgloot.rarity): Rarity specified in itemstack NBT does not exist!");
 					}
+
+					//Remove the tag since it's not needed anymore
 					itemtag.remove("rpgloot.rarity");
 				} else {
 					if (itemtag.contains("rpgloot.rarity_weights")) {
@@ -92,15 +102,21 @@ public class RandomizerTagUpdater {
 								weights[i] = 0;
 							}
 						}
-						rarity = ModifierRegistry.getRandomRarityWithWeights(ModifierRegistry.randomInstance, weights);
+						rarity = ModifierHelper.getRandomRarityWithWeights(DMCLoot.randomInstance, weights);
+
+						//Remove the tag since it's not needed anymore
 						itemtag.remove("rpgloot.rarity_weights");
 					}
 				}
-				if (rarity == null) {
-					rarity = ModifierRegistry.getRandomWeightedRarity(ModifierRegistry.randomInstance);
-				}
-				ModifierRegistry.applyRandomModifiersTo(stack, rarity);
 
+				//If we dont have the rarity or the weights tag, then just get a random rarity.
+				if (rarity == null) {
+					rarity = ModifierHelper.getRandomWeightedRarity(DMCLoot.randomInstance);
+				}
+
+				ModifierHelper.applyRandomModifiersTo(stack, rarity);
+
+				//Is set to false to make sure we dont randomize items multiple times
 				itemtag.putBoolean("rpgloot.randomize", false);
 				stack.setTag(itemtag);
 			}

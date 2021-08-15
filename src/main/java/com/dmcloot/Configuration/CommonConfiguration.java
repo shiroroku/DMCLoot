@@ -1,4 +1,4 @@
-package com.dmcloot;
+package com.dmcloot.Configuration;
 
 import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Registry.ModifierRegistry;
@@ -8,19 +8,19 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class CommonConfiguration {
 
-	public static ForgeConfigSpec COMMONCONFIG;
+	public static final ForgeConfigSpec COMMONCONFIG;
 
-	public static ForgeConfigSpec.BooleanValue MODIFY_ALL;
-	public static ForgeConfigSpec.DoubleValue GLOBAL_STRENGTH_MODIFIER;
-	public static ForgeConfigSpec.DoubleValue EMPTY_AFFIX_CHANCE;
-	public static ForgeConfigSpec.BooleanValue GLINT_EFFECT;
+	public static final ForgeConfigSpec.BooleanValue MODIFY_ALL;
+	public static final ForgeConfigSpec.DoubleValue GLOBAL_STRENGTH_MODIFIER;
+	public static final ForgeConfigSpec.DoubleValue EMPTY_AFFIX_CHANCE;
+	public static final ForgeConfigSpec.BooleanValue GLINT_EFFECT;
 
-	public static ForgeConfigSpec.IntValue COMMON_WEIGHT;
-	public static ForgeConfigSpec.IntValue UNCOMMON_WEIGHT;
-	public static ForgeConfigSpec.IntValue RARE_WEIGHT;
-	public static ForgeConfigSpec.IntValue EPIC_WEIGHT;
-	public static ForgeConfigSpec.IntValue LEGENDARY_WEIGHT;
-	public static ForgeConfigSpec.IntValue MYTHIC_WEIGHT;
+	public static final ForgeConfigSpec.IntValue COMMON_WEIGHT;
+	public static final ForgeConfigSpec.IntValue UNCOMMON_WEIGHT;
+	public static final ForgeConfigSpec.IntValue RARE_WEIGHT;
+	public static final ForgeConfigSpec.IntValue EPIC_WEIGHT;
+	public static final ForgeConfigSpec.IntValue LEGENDARY_WEIGHT;
+	public static final ForgeConfigSpec.IntValue MYTHIC_WEIGHT;
 
 	static {
 		ForgeConfigSpec.Builder commonBuilder = new ForgeConfigSpec.Builder();

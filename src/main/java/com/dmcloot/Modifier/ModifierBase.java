@@ -1,7 +1,7 @@
 package com.dmcloot.Modifier;
 
-import com.dmcloot.CommonConfiguration;
-import com.dmcloot.CuriosCompat;
+import com.dmcloot.Configuration.CommonConfiguration;
+import com.dmcloot.Compat.CuriosCompat;
 import com.dmcloot.DMCLoot;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -68,7 +68,7 @@ public abstract class ModifierBase implements IModifier {
 	/**
 	 * Applies this modifier and changes value depending on rarity.
 	 */
-	public void applyWithRarity(ItemStack stack, Rarity rarity) {
+	public void applyWithRarity(ItemStack stack, ModifierRarity rarity) {
 		float globalStrength = CommonConfiguration.GLOBAL_STRENGTH_MODIFIER.get().floatValue();
 		apply(stack, (int) (getMultiplierFromRarity(rarity) * globalStrength * getStrengthMultiplier()));
 	}

@@ -1,4 +1,4 @@
-package com.dmcloot;
+package com.dmcloot.Configuration;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
@@ -6,9 +6,9 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class ClientConfiguration {
 
-	public static ForgeConfigSpec CLIENTCONFIG;
+	public static final ForgeConfigSpec CLIENTCONFIG;
 
-	public static ForgeConfigSpec.BooleanValue GLINT_EFFECT;
+	public static final ForgeConfigSpec.BooleanValue GLINT_EFFECT;
 
 	static {
 		ForgeConfigSpec.Builder clientBuilder = new ForgeConfigSpec.Builder();

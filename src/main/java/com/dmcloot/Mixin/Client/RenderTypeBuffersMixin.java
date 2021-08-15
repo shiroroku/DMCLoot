@@ -1,6 +1,6 @@
 package com.dmcloot.Mixin.Client;
 
-import com.dmcloot.ClientConfiguration;
+import com.dmcloot.Configuration.ClientConfiguration;
 import com.dmcloot.Render.RenderTypes;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.minecraft.client.renderer.BufferBuilder;

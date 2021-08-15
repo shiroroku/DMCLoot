@@ -1,6 +1,6 @@
 package com.dmcloot.Item;
 
-import com.dmcloot.Modifier.IModifier;
+import com.dmcloot.Modifier.ModifierRarity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,14 +17,14 @@ import java.util.List;
 
 public class EssenceItem extends Item {
 
-	private final IModifier.Rarity rarity;
+	private final ModifierRarity rarity;
 
-	public EssenceItem(IModifier.Rarity rarityIn, Properties prop) {
+	public EssenceItem(ModifierRarity rarityIn, Properties prop) {
 		super(prop.fireResistant());
 		this.rarity = rarityIn;
 	}
 
-	public IModifier.Rarity getRarity() {
+	public ModifierRarity getRarity() {
 		return rarity;
 	}
 

@@ -1,4 +1,4 @@
-package com.dmcloot;
+package com.dmcloot.Compat;
 
 import com.dmcloot.Modifier.ModifierBase;
 import net.minecraft.entity.ai.attributes.Attribute;

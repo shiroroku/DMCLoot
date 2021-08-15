@@ -3,6 +3,7 @@ package com.dmcloot.Render;
 import com.dmcloot.DMCLoot;
 import com.dmcloot.Modifier.ModifierBase;
 import com.dmcloot.Registry.ModifierRegistry;
+import com.dmcloot.Util.ModifierHelper;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderState;
@@ -11,9 +12,13 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class RenderTypes extends RenderType {
 
+	//Just add modifier here and create glint texture in resources, mod does everything else.
 	enum RENDERTYPES {
 		FIRE(ModifierRegistry.MODIFIERS.FIRE.get()),
 		FROST(ModifierRegistry.MODIFIERS.FROST.get()),
@@ -50,7 +55,7 @@ public class RenderTypes extends RenderType {
 	}
 
 	public static RenderType getRenderTypeFromModifier(ItemStack item) {
-		for (ModifierRegistry.MODIFIERS modifier : ModifierRegistry.getAllModifiers(item)) {
+		for (ModifierRegistry.MODIFIERS modifier : ModifierHelper.getAllModifiers(item)) {
 			for (RENDERTYPES type : RENDERTYPES.values()) {
 				if (modifier.get().equals(type.getModifier())) {
 					return type.getRendertype();
