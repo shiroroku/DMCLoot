@@ -36,7 +36,7 @@ public class FrostModifier extends ModifierBase {
 	private static final String modifierName = "dmcloot.frost";
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048.0D));
 	private static final RegistryObject<Attribute> ATTRIBUTE2 = AttributeRegistry.ATTRIBUTES.register(modifierName + ".damage", () -> new RangedAttribute("attribute.name." + modifierName + ".damage", 0.0D, 0.0D, 2048.0D));
-	private static final Method Blaze_setCharged = ObfuscationReflectionHelper.findMethod(BlazeEntity.class, "func_220011_a", boolean.class);
+	private static final Method Blaze_setCharged = ObfuscationReflectionHelper.findMethod(BlazeEntity.class, "func_70844_e", boolean.class);
 
 	public FrostModifier() {
 		super(modifierName, Affix.Prefix);
