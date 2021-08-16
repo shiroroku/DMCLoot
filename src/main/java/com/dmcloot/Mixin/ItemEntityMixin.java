@@ -92,7 +92,7 @@ public class ItemEntityMixin {
 			item.setPosAndOldPos(item.blockPosition().getX() + 0.5f, item.blockPosition().getY(), item.blockPosition().getZ() + 0.5f);
 
 			//When piston is extended downwards.
-			if (!item.level.isClientSide && item.getItem().getItem() instanceof EssenceItem && above.getValue(PistonBlock.FACING).equals(Direction.DOWN) && above.getValue(PistonBlock.EXTENDED)) {
+			if (!item.level.isClientSide && item.getItem().getItem() instanceof EssenceItem && above.getValue(PistonBlock.FACING).equals(Direction.DOWN) && above.getValues().containsKey(PistonBlock.EXTENDED) && above.getValue(PistonBlock.EXTENDED)) {
 				if (item.level.getBlockState(item.blockPosition()).getBlock() == Blocks.MOVING_PISTON) {
 
 					//Get all items in the blockspace above smithing table.
