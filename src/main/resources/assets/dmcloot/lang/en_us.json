@@ -20,6 +20,8 @@
     "modifier.name.dmcloot.aquatic": "Aquatic",
     "modifier.name.dmcloot.swiftness": "of Swiftness",
     "modifier.name.dmcloot.guarding": "of Guarding",
+    "attribute.name.dmcloot.arcaneshielding": "Magic Damage Reduction",
+    "modifier.name.dmcloot.arcaneshielding": "of Arcane Shielding",
     "modifier.name.dmcloot.reaching": "Reaching",
     "modifier.name.dmcloot.regeneration": "of Regeneration",
     "attribute.name.dmcloot.regeneration": "Healing Rate",

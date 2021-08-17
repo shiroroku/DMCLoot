@@ -8,6 +8,7 @@
     "ItemEntityMixin"
   ],
   "client": [
+    "Client.BipedArmorLayerMixin",
     "Client.ItemRendererMixin",
     "Client.RenderTypeBuffersMixin"
   ]

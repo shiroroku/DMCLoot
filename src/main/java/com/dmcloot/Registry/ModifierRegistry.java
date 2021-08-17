@@ -7,6 +7,7 @@ import com.dmcloot.Modifier.Suffix.*;
 public class ModifierRegistry {
 
 	public enum MODIFIERS {
+		ARCANESHIELDING(new ArcaneShieldingModifier()),
 		FROST(new FrostModifier()),
 		FIRE(new FireModifier()),
 		LEARNING(new LearningModifier()),
