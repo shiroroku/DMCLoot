@@ -1,5 +1,6 @@
 package com.dmcloot;
 
+import com.dmcloot.Configuration.CommonConfiguration;
 import com.dmcloot.Item.EssenceItemColor;
 import com.dmcloot.Modifier.ModifierRarity;
 import com.dmcloot.Registry.ItemRegistry;
@@ -37,15 +38,22 @@ public class ClientSetup {
 		if (ModifierHelper.hasAnyModifier(item)) {
 
 			//Special, for modpack
-			if (e.getToolTip().size() >= 2) {
-				if (e.getToolTip().get(1).getString().equals("Common")) {
+			if (e.getToolTip().size() >= 2 && e.getToolTip().get(1) instanceof TranslationTextComponent) {
+				TranslationTextComponent tc = (TranslationTextComponent) e.getToolTip().get(1);
+				if (tc.getKey().equals("rarity.dmcloot.common")) {
 					e.getToolTip().remove(1);
 				}
 			}
 			//====
 
 			ModifierRarity rarity = ModifierHelper.getItemRarity(item);
-			e.getToolTip().add(1, new TranslationTextComponent("rarity.dmcloot." + rarity).setStyle(Style.EMPTY.withColor(Color.fromRgb(customDarker(new java.awt.Color(rarity.getColor().getColor())).getRGB()))));
+			Color rarityColor;
+			if (CommonConfiguration.DIM_RARITY_TOOLTIP.get()) {
+				rarityColor = Color.fromRgb(customDarker(new java.awt.Color(rarity.getColor().getColor())).getRGB());
+			} else {
+				rarityColor = Color.fromRgb(new java.awt.Color(rarity.getColor().getColor()).getRGB());
+			}
+			e.getToolTip().add(1, new TranslationTextComponent("rarity.dmcloot." + rarity).setStyle(Style.EMPTY.withColor(rarityColor)));
 		}
 	}
 
