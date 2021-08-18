@@ -1,0 +1,11 @@
+{
+    "name": "Arcane Shielding",
+    "icon": "minecraft:book",
+    "category": "dmcloot:suffixes",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Negates a portion of magic damage, stacks. Magic damage includes Potion Effects, Evoker Fangs, etc. Applicable to armor and shields."
+        }
+    ]
+}
