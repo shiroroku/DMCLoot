@@ -11,6 +11,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,7 @@ public class SpeedModifier extends ModifierBase {
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048D));
 
 	public SpeedModifier() {
-		super(modifierName, Affix.Suffix);
+		super(modifierName, Affix.Suffix, new Color(255, 66, 66));
 	}
 
 	@Override

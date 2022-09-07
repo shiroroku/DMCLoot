@@ -1,8 +1,10 @@
 package com.dmcloot.Modifier;
 
-import com.dmcloot.Configuration.CommonConfiguration;
 import com.dmcloot.Compat.CuriosCompat;
+import com.dmcloot.Configuration.CommonConfiguration;
 import com.dmcloot.DMCLoot;
+import com.dmcloot.Item.AffixedMetalItem;
+import com.dmcloot.Registry.ItemRegistry;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -11,8 +13,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,13 +26,24 @@ public abstract class ModifierBase implements IModifier {
 	private ForgeConfigSpec.ConfigValue<List<String>> ADDITIONS = null;
 	private ForgeConfigSpec.IntValue WEIGHT = null;
 	private ForgeConfigSpec.DoubleValue STRENGTH = null;
-
+	private final RegistryObject<Item> AFFIXED_METAL;
+	private final Color color;
 	private final String name;
 	private final Affix affix;
 
-	public ModifierBase(String name, Affix affix) {
+	public ModifierBase(String name, Affix affix, Color color) {
 		this.name = name;
 		this.affix = affix;
+		this.color = color;
+		AFFIXED_METAL = ItemRegistry.ITEMS.register("affixed_metal_" + name.split("\\.")[1], () -> new AffixedMetalItem(this));
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public Item getAffixedMetal() {
+		return AFFIXED_METAL.get();
 	}
 
 	@Override

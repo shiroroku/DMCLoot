@@ -1,0 +1,12 @@
+{
+    "name": "Obtaining Affixed Metal",
+    "icon": "minecraft:soul_campfire",
+    "category": "dmcloot:affixed_metal",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "You can obtain an item's prefix or suffix by throwing it into Soul Fire$(br2)Though it's not always guaranteed, you might get both affixes or even none! (Affixed metal can be tweaked or disabled in the config)"
+        }
+    ]
+}

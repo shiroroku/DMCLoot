@@ -19,6 +19,7 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +31,7 @@ public class MendingModifier extends ModifierBase {
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048D));
 
 	public MendingModifier() {
-		super(modifierName, Affix.Prefix);
+		super(modifierName, Affix.Prefix, new Color(120, 255, 66));
 	}
 
 	@Override

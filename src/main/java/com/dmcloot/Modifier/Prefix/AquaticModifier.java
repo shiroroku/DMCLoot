@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class AquaticModifier extends ModifierBase {
 
 	public AquaticModifier() {
-		super("dmcloot.aquatic", Affix.Prefix);
+		super("dmcloot.aquatic", Affix.Prefix, new Color(66, 110, 255));
 	}
 
 	@Override

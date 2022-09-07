@@ -1,9 +1,11 @@
 package com.dmcloot.Mixin;
 
+import com.dmcloot.Configuration.CommonConfiguration;
 import com.dmcloot.DMCLoot;
 import com.dmcloot.Item.EssenceItem;
 import com.dmcloot.Modifier.IModifier;
 import com.dmcloot.Registry.ItemRegistry;
+import com.dmcloot.Registry.ModifierRegistry;
 import com.dmcloot.Util.ModifierHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -42,7 +44,8 @@ public class ItemEntityMixin {
 			return;
 		}
 
-		handleEssenseCrafting(item);
+		handleAffixedMetalCrafting(item);
+		handleEssensePressing(item);
 
 		//Make sure we are in the nether, and dealing with a dmcloot item
 		if (!item.level.dimensionType().piglinSafe() || !ModifierHelper.hasAnyModifier(item.getItem())) {
@@ -58,8 +61,10 @@ public class ItemEntityMixin {
 					item.level.addParticle(ParticleTypes.LARGE_SMOKE, item.getX() + item.level.random.nextDouble() - 0.5f, item.getY(), item.getZ() + item.level.random.nextDouble() - 0.5f, 0, 0.1D, 0);
 				}
 			} else {
-				ItemStack essence = new ItemStack(ItemRegistry.getEssenceFromRarity(ModifierHelper.getItemRarity(item.getItem())));
-				item.level.addFreshEntity(new ItemEntity(item.level, item.getX(), item.getY(), item.getZ(), essence));
+				if (DMCLoot.randomInstance.nextDouble() <= CommonConfiguration.ESSENCE_BURNING_CHANCE.get()) {
+					ItemStack essence = new ItemStack(ItemRegistry.getEssenceFromRarity(ModifierHelper.getItemRarity(item.getItem())));
+					item.level.addFreshEntity(new ItemEntity(item.level, item.getX(), item.getY(), item.getZ(), essence));
+				}
 				item.remove();
 			}
 		}
@@ -83,7 +88,38 @@ public class ItemEntityMixin {
 		return true;
 	}
 
-	private void handleEssenseCrafting(ItemEntity item) {
+	private void handleAffixedMetalCrafting(ItemEntity item) {
+		if (CommonConfiguration.ENABLE_AFFIXED_METAL_CRAFTING.get() && ModifierHelper.hasAnyModifier(item.getItem()) && item.level.getBlockState(new BlockPos(item.getX(), item.getY(), item.getZ())).getBlock() == Blocks.SOUL_FIRE) {
+			double prefixChance = DMCLoot.randomInstance.nextDouble();
+			double suffixChance = DMCLoot.randomInstance.nextDouble();
+
+			boolean didAny = false;
+
+			List<ModifierRegistry.MODIFIERS> modifiers = ModifierHelper.getAllModifiers(item.getItem());
+			for (ModifierRegistry.MODIFIERS modifier : modifiers) {
+				if (modifier.get().getModifierAffix() == IModifier.Affix.Prefix) {
+					if (prefixChance <= CommonConfiguration.AFFIXED_METAL_PREFIX_BURNING_CHANCE.get()) {
+						item.level.addFreshEntity(new ItemEntity(item.level, item.getX(), item.getY(), item.getZ(), new ItemStack(modifier.get().getAffixedMetal())));
+						didAny = true;
+					}
+				} else {
+					if (modifier.get().getModifierAffix() == IModifier.Affix.Suffix) {
+						if (suffixChance <= CommonConfiguration.AFFIXED_METAL_SUFFIX_BURNING_CHANCE.get()) {
+							item.level.addFreshEntity(new ItemEntity(item.level, item.getX(), item.getY(), item.getZ(), new ItemStack(modifier.get().getAffixedMetal())));
+							didAny = true;
+						}
+					}
+				}
+			}
+
+			if (didAny) {
+				item.remove();
+			}
+
+		}
+	}
+
+	private void handleEssensePressing(ItemEntity item) {
 		BlockState above = item.level.getBlockState(item.blockPosition().above());
 		if ((above.getBlock() == Blocks.PISTON || above.getBlock() == Blocks.MOVING_PISTON || above.getBlock() == Blocks.PISTON_HEAD) && item.level.getBlockState(item.blockPosition().below()).getBlock() == Blocks.SMITHING_TABLE) {
 

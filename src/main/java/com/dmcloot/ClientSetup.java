@@ -1,9 +1,11 @@
 package com.dmcloot;
 
 import com.dmcloot.Configuration.CommonConfiguration;
+import com.dmcloot.Item.AffixedMetalItemColor;
 import com.dmcloot.Item.EssenceItemColor;
 import com.dmcloot.Modifier.ModifierRarity;
 import com.dmcloot.Registry.ItemRegistry;
+import com.dmcloot.Registry.ModifierRegistry;
 import com.dmcloot.Util.ModifierHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.Color;
@@ -31,6 +33,9 @@ public class ClientSetup {
 	@OnlyIn(Dist.CLIENT)
 	public static void registerItemColors(ColorHandlerEvent.Item event) {
 		event.getItemColors().register(new EssenceItemColor(), ItemRegistry.ESSENCE_COMMON.get(), ItemRegistry.ESSENCE_UNCOMMON.get(), ItemRegistry.ESSENCE_RARE.get(), ItemRegistry.ESSENCE_EPIC.get(), ItemRegistry.ESSENCE_LEGENDARY.get(), ItemRegistry.ESSENCE_MYTHIC.get());
+		for (ModifierRegistry.MODIFIERS modifier : ModifierRegistry.MODIFIERS.values()) {
+			event.getItemColors().register(new AffixedMetalItemColor(), modifier.get().getAffixedMetal());
+		}
 	}
 
 	public static void onItemTooltip(ItemTooltipEvent e) {

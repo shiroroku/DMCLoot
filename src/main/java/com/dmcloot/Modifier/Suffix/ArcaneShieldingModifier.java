@@ -17,6 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ArcaneShieldingModifier extends ModifierBase {
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048D));
 
 	public ArcaneShieldingModifier() {
-		super(modifierName, Affix.Suffix);
+		super(modifierName, Affix.Suffix, new Color(66, 75, 255));
 	}
 
 	@Override

@@ -1,8 +1,10 @@
 package com.dmcloot.Item;
 
+import com.dmcloot.DMCLoot;
 import com.dmcloot.Modifier.ModifierRarity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -19,8 +21,8 @@ public class EssenceItem extends Item {
 
 	private final ModifierRarity rarity;
 
-	public EssenceItem(ModifierRarity rarityIn, Properties prop) {
-		super(prop.fireResistant());
+	public EssenceItem(ModifierRarity rarityIn) {
+		super(new Item.Properties().tab(DMCLoot.creativeTab).fireResistant());
 		this.rarity = rarityIn;
 	}
 

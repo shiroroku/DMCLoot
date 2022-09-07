@@ -12,6 +12,7 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.item.TieredItem;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.UUID;
 public class GuardingModifier extends ModifierBase {
 
 	public GuardingModifier() {
-		super("dmcloot.guarding", Affix.Suffix);
+		super("dmcloot.guarding", Affix.Suffix, new Color(66, 255, 75));
 	}
 
 	@Override

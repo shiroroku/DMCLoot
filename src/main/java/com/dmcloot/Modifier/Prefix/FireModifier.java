@@ -23,6 +23,7 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +35,7 @@ public class FireModifier extends ModifierBase {
 	private static final RegistryObject<Attribute> ATTRIBUTE2 = AttributeRegistry.ATTRIBUTES.register(modifierName + ".damage", () -> new RangedAttribute("attribute.name." + modifierName + ".damage", 0.0D, 0.0D, 2048.0D));
 
 	public FireModifier() {
-		super(modifierName, Affix.Prefix);
+		super(modifierName, Affix.Prefix, new Color(255, 66, 66));
 	}
 
 	@Override

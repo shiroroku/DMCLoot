@@ -24,11 +24,11 @@ public class ModifierHelper {
 	public static ModifierRarity getRandomWeightedRarity(Random rand) {
 		int total = 0;
 		for (ModifierRarity rarity : ModifierRarity.values()) {
-			total += rarity.getWeight();
+			total += ModifierRarity.getWeight(rarity);
 		}
 		int random = rand.nextInt(total) + 1;
 		for (ModifierRarity rarity : ModifierRarity.values()) {
-			random -= rarity.getWeight();
+			random -= ModifierRarity.getWeight(rarity);
 			if (random <= 0) {
 				return rarity;
 			}
@@ -103,15 +103,47 @@ public class ModifierHelper {
 	 * Also sets item's name and rarity tag.
 	 */
 	public static void applyRandomModifiersTo(ItemStack item, ModifierRarity rarity) {
-		TextComponent originalName = (TextComponent) item.getHoverName();
-		IFormattableTextComponent newName = null;
 
 		ModifierBase prefix = getRandomModifierFor(IModifier.Affix.Prefix, item, true);
 		ModifierBase suffix = getRandomModifierFor(IModifier.Affix.Suffix, item, true);
 
+		if (prefix != null) {
+			prefix.applyWithRarity(item, rarity);
+		}
+		if (suffix != null) {
+			suffix.applyWithRarity(item, rarity);
+		}
+
+		//Update name with new name, set rarity tag.
+		if (renameItemFromModifiers(item, rarity)) {
+			CompoundNBT tag = item.getOrCreateTag();
+			tag.putString("dmcloot.rarity", rarity.toString());
+			item.setTag(tag);
+		}
+	}
+
+	/**
+	 * Renames the item to contain rarity and affixes
+	 */
+	public static boolean renameItemFromModifiers(ItemStack item, ModifierRarity rarity) {
+		TextComponent originalName = (TextComponent) item.getHoverName();
+		IFormattableTextComponent newName = null;
+		ModifierBase prefix = null;
+		ModifierBase suffix = null;
+
+		for (ModifierRegistry.MODIFIERS modifier : ModifierHelper.getAllModifiers(item)) {
+			if (prefix == null && modifier.get().getModifierAffix() == IModifier.Affix.Prefix) {
+				prefix = modifier.get();
+			}
+
+			if (suffix == null && modifier.get().getModifierAffix() == IModifier.Affix.Suffix) {
+				suffix = modifier.get();
+			}
+		}
+
 		//If there's no possible modifiers for this item, return.
 		if (prefix == null && suffix == null) {
-			return;
+			return false;
 		}
 
 		//If there's a prefix, but no suffix, append prefix to name.
@@ -129,20 +161,9 @@ public class ModifierHelper {
 			newName = prefix.getTranslationComponent().append(" ").append(originalName).append(" ").append(suffix.getTranslationComponent());
 		}
 
-		if (prefix != null) {
-			prefix.applyWithRarity(item, rarity);
-		}
-		if (suffix != null) {
-			suffix.applyWithRarity(item, rarity);
-		}
-
-		//Update name with new name, set rarity tag.
-		if (newName != null) {
-			CompoundNBT tag = item.getOrCreateTag();
-			tag.putString("dmcloot.rarity", rarity.toString());
-			item.setTag(tag);
-			item.setHoverName(newName.withStyle(Style.EMPTY.withColor(rarity.getColor()).withItalic(false)));
-		}
+		item.getTag().putString("dmcloot.rarity", rarity.toString());
+		item.setHoverName(newName.withStyle(Style.EMPTY.withColor(rarity.getColor()).withItalic(false)));
+		return true;
 	}
 
 	/**

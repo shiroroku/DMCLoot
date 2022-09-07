@@ -17,6 +17,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -30,7 +31,7 @@ public class LearningModifier extends ModifierBase {
 	private static final Method getMobExperience = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_70693_a", PlayerEntity.class);
 
 	public LearningModifier() {
-		super(modifierName, Affix.Suffix);
+		super(modifierName, Affix.Suffix, new Color(170, 255, 66));
 	}
 
 	@Override

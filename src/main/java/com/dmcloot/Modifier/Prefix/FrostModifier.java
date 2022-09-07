@@ -25,6 +25,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -39,7 +40,7 @@ public class FrostModifier extends ModifierBase {
 	private static final Method Blaze_setCharged = ObfuscationReflectionHelper.findMethod(BlazeEntity.class, "func_70844_e", boolean.class);
 
 	public FrostModifier() {
-		super(modifierName, Affix.Prefix);
+		super(modifierName, Affix.Prefix, new Color(66, 233, 255));
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,7 @@ public class CriticalModifier extends ModifierBase {
 	private static final RegistryObject<Attribute> ATTRIBUTE = AttributeRegistry.ATTRIBUTES.register(modifierName, () -> new RangedAttribute("attribute.name." + modifierName, 0.0D, 0.0D, 2048D));
 
 	public CriticalModifier() {
-		super(modifierName, Affix.Prefix);
+		super(modifierName, Affix.Prefix, new Color(170, 255, 66));
 	}
 
 	@Override

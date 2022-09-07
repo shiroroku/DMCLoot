@@ -5,6 +5,8 @@ import com.dmcloot.Configuration.CommonConfiguration;
 import com.dmcloot.Registry.AttributeRegistry;
 import com.dmcloot.Registry.ItemRegistry;
 import com.dmcloot.Util.ItemModifierAutoRandomizer;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -20,6 +22,12 @@ public class DMCLoot {
 	public static final String MODID = "dmcloot";
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final Random randomInstance = new Random();
+	public static final ItemGroup creativeTab = new ItemGroup(DMCLoot.MODID) {
+		@Override
+		public ItemStack makeIcon() {
+			return new ItemStack(ItemRegistry.ESSENCE_MYTHIC.get());
+		}
+	};
 
 	public DMCLoot() {
 		ItemRegistry.init();

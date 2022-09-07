@@ -1,0 +1,13 @@
+
+{
+    "name": "Applying Affixed Metal",
+    "icon": "minecraft:anvil",
+    "category": "dmcloot:affixed_metal",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "You can easily apply affixed metal to a valid item by combining them in the Anvil.$(br2)It will keep the item's rarity and other affix, and only override the affix of the same type."
+        }
+    ]
+}

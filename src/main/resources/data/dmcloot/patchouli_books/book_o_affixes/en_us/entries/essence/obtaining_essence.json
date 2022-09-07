@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Essence can be obtained by throwing item's with rarity into a Nether Brick Lavapool in the Nether.$(br2)These are usually found in the Nether Fortress, but it is possible to create your own."
+            "text": "Essence can be obtained by throwing item's with rarity into a Nether Brick Lavapool in the Nether.$(br2)These are usually found in the Nether Fortress, but it is possible to create your own.$(br2)Don't throw too many at once! You may not get your essence."
         },
         {
             "type": "multiblock",
