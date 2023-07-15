@@ -1,15 +1,15 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.dmcloot.Mixin",
+  "package": "shiroroku.dmcloot.Mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "dmcloot.refmap.json",
   "mixins": [
     "ItemEntityMixin"
   ],
   "client": [
-    "Client.BipedArmorLayerMixin",
-    "Client.ItemRendererMixin",
-    "Client.RenderTypeBuffersMixin"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

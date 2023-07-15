@@ -1,26 +1,26 @@
-license = "MIT"
-loaderVersion = "[36,)"
 modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+license = "${mod_license}"
+
 [[mods]]
-displayName = "DMCLoot"
-modId = "dmcloot"
-version = "1.16.5"
+modId = "${mod_id}"
+version = "${mod_version}"
 logoFile="icon.png"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/dmcloot"
-authors = "shiroroku(elise)"
-credits = "amo"
-description = '''
-Adds various RPG-like affixes to tools, weapons, and armor!
-'''
-[[dependencies.dmcloot]]
-mandatory = true
+displayName = "${mod_name}"
+authors = "${mod_authors}"
+displayURL = "${mod_link}"
+description = '''${mod_description}'''
+
+[[dependencies.${ mod_id }]]
 modId = "forge"
-ordering = "NONE"
-side = "BOTH"
-versionRange = "[36,)"
-[[dependencies.dmcloot]]
 mandatory = true
-modId = "minecraft"
+versionRange = "${forge_version_range}"
 ordering = "NONE"
 side = "BOTH"
-versionRange = "[1.16.5,1.17)"
+
+[[dependencies.${ mod_id }]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
