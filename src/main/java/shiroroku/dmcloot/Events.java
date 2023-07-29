@@ -2,10 +2,15 @@ package shiroroku.dmcloot;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import shiroroku.dmcloot.Command.RarityDistributionsCommand;
 import shiroroku.dmcloot.Item.AffixedMetalItem;
 import shiroroku.dmcloot.Modifier.IModifier;
 import shiroroku.dmcloot.Modifier.ModifierBase;
@@ -16,18 +21,22 @@ import shiroroku.dmcloot.Util.ModifierHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Mod.EventBusSubscriber(modid = DMCLoot.MODID)
 public class Events {
 
     public static void init() {
-        MinecraftForge.EVENT_BUS.addListener(Events::onItemAttributeModifier);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, Events::sortItemAttributes);
-        MinecraftForge.EVENT_BUS.addListener(Events::onAnvilUpdate);
-
         for (ModifierRegistry.MODIFIERS modifier : ModifierRegistry.MODIFIERS.values()) {
             modifier.get().handleEventRegistry();
         }
     }
 
+    @SubscribeEvent
+    public static void onRegisterCommand(RegisterCommandsEvent event) {
+        RarityDistributionsCommand.register(event.getDispatcher());
+    }
+
+    @SubscribeEvent
     public static void onAnvilUpdate(AnvilUpdateEvent event) {
         ItemStack leftItem = event.getLeft();
         ItemStack rightItem = event.getRight();
@@ -77,6 +86,7 @@ public class Events {
         }
     }
 
+    @SubscribeEvent
     public static void sortItemAttributes(ItemAttributeModifierEvent e) {
 		//TODO
 		/*
@@ -95,6 +105,7 @@ public class Events {
         }*/
     }
 
+    @SubscribeEvent
     public static void onItemAttributeModifier(ItemAttributeModifierEvent e) {
         for (ModifierRegistry.MODIFIERS modifier : ModifierRegistry.MODIFIERS.values()) {
             if (modifier.get().itemHasModifier(e.getItemStack())) {

@@ -57,7 +57,7 @@ public class ItemModifierAutoRandomizer {
         }
     }
 
-    private static void processRandomize(ItemStack stack) {
+    public static void processRandomize(ItemStack stack) {
         //This only randomizes items with tags or curios (curios WIP)
         if (stack.hasTag()) {
             CompoundTag itemtag = stack.getOrCreateTag();
