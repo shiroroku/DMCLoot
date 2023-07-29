@@ -91,7 +91,7 @@ public class FireModifier extends ModifierBase {
 			ItemStack weapon = player.getMainHandItem();
             if (mod.itemHasModifier(weapon)) {
                 LivingEntity target = e.getEntity();
-                target.setSecondsOnFire(Math.round(mod.getValue(weapon) * 20f));
+                target.setSecondsOnFire(mod.getValue(weapon));
                 if (!target.isInWaterOrRain() && !target.fireImmune() || target instanceof Stray || target instanceof Silverfish || target instanceof SnowGolem || target.getClassification(false) == MobCategory.CREATURE) {
                     e.setAmount(e.getAmount() + (float) mod.getValue(weapon, ATTRIBUTE2.get()));
                     player.level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.6f, (float) (1f + player.level.random.nextDouble()));
