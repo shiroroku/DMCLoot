@@ -37,7 +37,5 @@ public class DMCLoot {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.COMMONCONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfiguration.CLIENTCONFIG);
-
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
     }
 }
